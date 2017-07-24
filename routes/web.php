@@ -24,6 +24,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::patch('orders/{idOrder}', 'OrderController@update');
     Route::get('oldOrders', 'OrderController@oldOrders');
 
+    Route::get('feedback', 'FeedbackController@index');
+    Route::patch('feedback/{idFeedback}', 'FeedbackController@update');
+    Route::get('oldFeedback', 'FeedbackController@oldFeedback');
+
     Route::post('images/uploads', 'ImageController@uploads');
     Route::delete('images/delete', 'ImageController@delete');
     Route::get('images/get', 'ImageController@getInitialFiles');

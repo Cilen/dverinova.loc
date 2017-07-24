@@ -25,6 +25,13 @@
                     <li class="pushy-link"><a href="{{ url('admin/oldOrders') }}">Оброблені замовлення</a></li>
                 </ul>
             </li>
+            <li class="pushy-submenu">
+                <button>Зворотній зв'язок</button>
+                <ul>
+                    <li class="pushy-link"><a href="{{ url('admin/feedback') }}">Нові запити</a></li>
+                    <li class="pushy-link"><a href="{{ url('admin/oldFeedback') }}">Оброблені запити</a></li>
+                </ul>
+            </li>
             {{--<li class="pushy-link"><a href="#">Статистика</a></li>--}}
         </ul>
     </div>
