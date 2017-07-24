@@ -95,3 +95,26 @@ $("#buyProduct").submit(function(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 
 });
+
+$("#feedback").submit(function(e) {
+
+    $('.feedbackModal').modal('hide');
+    var url = "/newfeedback"; // the script where you handle the form input.
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: $("#feedback").serialize(), // serializes the form's elements.
+        success: function(data)
+        {
+            $('.feedbackSuccess').modal('show');
+            console.log(data);
+        },
+        error: function(data)
+        {
+            $('.feedbackError').modal('show');
+            console.log(data)
+        }
+    });
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+
+});

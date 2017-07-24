@@ -36,10 +36,8 @@
                 {title: "Переглянуто",field: "viewed", sorter: "boolean",align: "center",formatter: "tick", editable: true, width: "120"},
 
             ],
-            index: "id_product",
+            index: "id_order",
             cellEdited: function (id, data, value, oldVal, rowData, cell, row) {
-                rowData['availability'] == true ? rowData['availability'] = 1 : rowData['availability'] = 0;
-                rowData['top'] == true ? rowData['top'] = 1 : rowData['top'] = 0;
                 var send = {
                     "id_order": rowData.id_order,
                     "_method": "PATCH",

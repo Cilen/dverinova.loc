@@ -12,6 +12,7 @@ Route::get('contacts', function () {
 })->name('contacts');
 
 Route::post('neworder', 'OrderController@story')->name('neworder');
+Route::post('newfeedback', 'FeedbackController@story')->name('newfeedback');
 
 
 Auth::routes();
