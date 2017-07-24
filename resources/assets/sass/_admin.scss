@@ -1,0 +1,45 @@
+/* Menu Button */
+
+.menu-btn{
+  width: 100px;
+  padding: 10px;
+  margin-bottom: 30px;
+  background: #000;
+  color: #FFF;
+  text-align: center;
+  cursor: pointer;
+  border: 0px;
+
+  &:hover{
+    opacity: 0.6;
+  }
+}
+#container{
+  position: absolute;
+  z-index: 999;
+  height: 39px;
+}
+
+.admin-title-panel{
+  background-color: $theme-background-color;
+  color: $accent-color;
+  height: 39px;
+}
+.admin-title{
+  width: 300px;
+  font-size: 2em;
+}
+
+#add-product-form {
+  .form-group:nth-of-type(n+2){
+    display: none;
+  }
+}
+
+.qq-gallery .add-to-favorite {
+  background-color: #F2F7ED;
+  width: 15px;
+  height: 15px;
+  vertical-align: sub;
+  display: inline-block;
+}

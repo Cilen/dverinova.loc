@@ -1,0 +1,53 @@
+.logo-block{
+  .slider-for{
+    img{
+      margin: 15px auto;
+      border: none;
+    }
+  }
+  .slider-nav{
+    .slick-slide{
+      height: 100px;
+      img{
+        margin: 0 auto;
+      }
+    }
+    .slick-current{
+      filter: grayscale(100%);
+    }
+  }
+}
+
+.item-info{
+  li {
+    list-style: none;
+    margin-top: 1em;
+  }
+  .item-price-without-discount{
+    font-size: 1em;
+    text-decoration: line-through;
+    line-height: 1;
+    color: #444;
+  }
+  .item-price-total{
+    font-size: 1.8em;
+    line-height: 1;
+    color: red;
+    margin-bottom: 20px;
+  }
+
+  .availability{
+    font-size: 1em;
+    color: #5DA30C;
+  }
+  .no-availability{
+    font-size: 1em;
+    color: #444;
+  }
+  .item-id{
+    font-size: 1em;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+}
+

@@ -1,0 +1,48 @@
+
+header {
+  background-color: $theme-background-color;
+
+  .header-block {
+    color: $background-color;
+    font-family: "Roboto";
+    .phones{
+      margin-top: 10px;
+    }
+    p{
+      margin: 0;
+    }
+    a {
+      color: $accent-color;
+      text-decoration: underline;
+      font-size: 1.1em;
+      &:hover, &:focus {
+        color: $background-color;
+      }
+    }
+  }
+}
+
+hr{
+  border-color: $theme-color;
+  margin: 10px 0;
+}
+
+.breadcrumb{
+  margin-bottom: 5px;
+  background-color: transparent;
+}
+
+a{
+  text-decoration: none;
+  border: none;
+  &:focus{
+    text-decoration: none;
+    border: none;
+    outline: none;
+  }
+  &:hover{
+    text-decoration: none;
+    border: none;
+    outline: none;
+  }
+}

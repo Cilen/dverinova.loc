@@ -1,0 +1,60 @@
+.category-title{
+  h2{
+    margin-top: 0;
+  }
+}
+
+.category-item{
+  position: relative;
+  .category-item-img {
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+    img {
+      display: inline-block;
+      max-width: 240px;
+    }
+  }
+
+  .caption{
+    padding-bottom: 0;
+    h4{
+      height: 50px;
+      vertical-align: middle;
+      text-align: center;
+      font-size: 1.2em;
+    }
+  }
+  .item-price-total{
+    text-align: center;
+    font-size: 1.7em;
+    line-height: 0.9;
+    color: red;
+    margin-bottom: 0;
+  }
+  .thumbnail{
+    &:hover{
+      box-shadow: 0 0 10px #aaa;
+    }
+  }
+}
+
+.stiker{
+  height: 44px;
+  width: 40px;
+  right: 25px;
+  top: 15px;
+  display: inline;
+  position: absolute;
+  padding-top: 6px;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #fff;
+
+}
+.stiker-discount{
+  @extend .stiker;
+  background-image: url("/images/stiker.png");
+
+}
