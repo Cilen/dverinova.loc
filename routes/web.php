@@ -8,7 +8,7 @@ Route::get('category/{category}/type/{type}/{idProduct}', 'ProductController@get
     ->where('id', '[0-9]+');
 
 Route::get('contacts', function () {
-    return "contacts";
+    return view('contacts');
 })->name('contacts');
 
 Route::post('neworder', 'OrderController@story')->name('neworder');

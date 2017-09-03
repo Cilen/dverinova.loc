@@ -1,0 +1,38 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            {!! Breadcrumbs::render() !!}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="category-title">
+                    <h2>Адреси магазинів</h2>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <h3>м.Новий Розділ, прсп. Шевченка 31</h3>
+                <p><strong>Режим роботи:</strong></p>
+                <p>ПН.-ПТ. 09.00 - 20.00</p>
+                <p>СБ. 10.00 - 15.00</p>
+                <p>НД.- вихідний</p>
+                <div class="col-xs-3">
+                    <img src="http://via.placeholder.com/150x150" alt="">
+                </div>
+                <div class="col-xs-3">
+                    <img src="http://via.placeholder.com/150x150" alt="">
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d648.1908245231973!2d24.1498181!3d49.470087!3m2!1i1024!2i768!4f13.1!5e0!3m2!1suk!2sua!4v1503697967655" width="100%" height="auto" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('scripts')
+
+@endsection

@@ -3,14 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-
-            </div>
-        </div>
-        <div class="row">
-            <section>
-                <h2>Хіт продаж</h2>
-                <hr>
+            <div class="col-xs-12">
+                <section>
+                    <h2>Хіт продаж</h2>
+                    <hr>
                     <div class="slider">
                         @foreach($top as $item)
                             <div class="category-item">
@@ -31,10 +27,10 @@
                             </div>
                         @endforeach
                     </div>
-            </section>
-            <section>
-                <h2>Знижена ціна</h2>
-                <hr>
+                </section>
+                <section>
+                    <h2>Знижена ціна</h2>
+                    <hr>
                     <div class="slider">
                         @foreach($discount as $item)
                             <div class="category-item">
@@ -58,7 +54,9 @@
                             </div>
                         @endforeach
                     </div>
-            </section>
+                </section>
+            </div>
+
         </div>
     </div>
 @endsection

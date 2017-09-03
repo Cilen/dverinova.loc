@@ -31,6 +31,9 @@
         @yield('content')
     </div>
 
+    @include('layouts.feedbackModal')
+
+
     <!-- Scripts -->
     <script src="/js/app.js"></script>
     <script>
