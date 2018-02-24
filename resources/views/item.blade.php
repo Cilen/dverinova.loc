@@ -89,7 +89,6 @@
                 asNavFor: '.slider-nav'
             });
             $('.slider-nav').slick({
-
                 slidesToShow: 4,
                 slidesToScroll: 1,
                 touchMove: false,

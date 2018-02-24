@@ -3,6 +3,7 @@
         <div class="row">
             <div class="header-block">
                 <div class="col-sm-4">
+                    {{--<a href="{{route('main')}}"><img src="http://via.placeholder.com/200x80"></a>--}}
                     <a href="{{route('main')}}"><img src="/images/logo.png"></a>
                 </div>
                 <div class="col-sm-6 hidden-xs  text-right">

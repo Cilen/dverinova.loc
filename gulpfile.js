@@ -25,6 +25,7 @@ gulp.task('scripts', function() {
         'resources/assets/js/vendor/tabulator.js', // Bootgrid
         'resources/assets/js/vendor/slick.js', // Slick
         'resources/assets/js/app.js', // Власні скрипти
+        'resources/assets/js/vendor/lightbox.min.js', // lightbox
     ])
         .pipe(concat('app.js')) // Собираем их в кучу в новом файле libs.min.js
         //.pipe(uglify()) // Сжимаем JS файл
