@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SendMail;
 use App\Http\Requests\OrderUpdateRequest;
 use App\Http\Requests\OrderRequest;
 use App\Order;
@@ -37,17 +38,19 @@ class OrderController extends Controller
 
     }
     //Отримання даних з форми (за допомогою AJAX запиту) і створення моделі
-    public function story (OrderRequest $request)
+    public function story (OrderRequest $request, SendMail $mail)
     {
         $idProduct = $request->input('idProduct');
         $userName = $request->input('userName');
-        $phone = $request->input('phone') ;
+        $phone = $request->input('phone');
+        $category = $request->input('category');
         $order = Order::create([
             'id_product' => $idProduct,
             'user_name' => $userName,
             'phone' => $phone,
             'viewed' => 0
         ]);
+        $mail->orderMail($userName, $phone, $idProduct, $category);
         return "Success";
     }
 

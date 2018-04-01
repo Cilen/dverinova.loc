@@ -11,6 +11,7 @@
                 <form method="post" id="buyProduct" action="{{url('admin/product/'.$data['id_product'])}}">
                     {{ csrf_field() }}
                     <input type="hidden" name="idProduct" value="{{$data['id_product']}}">
+                    <input type="hidden" name="category" value="{{$data['category']}}">
                     <p>Залиште свої контактні дані, і ми зв’яжемось з Вами у найкоротший термін</p>
                     <div class="form-group">
                         <label for="userName">Ім'я</label>

@@ -8,7 +8,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-sm-6">
+            <div class="col-lg-3 col-sm-3">
                 <div class="logo-block">
                     @if ($images)
                         <div class="slider slider-for">
@@ -28,11 +28,11 @@
                     @endif
                 </div>
             </div>
-            <div class="col-lg-8 col-sm-6">
+            <div class="col-lg-9 col-sm-9">
                 <div class="container">
                     <div class="item-info">
                         <div class="row">
-                            <div class="col-lg-8 col-sm-6">
+                            <div class="col-lg-9 col-sm-9">
                                 <div class="item-info">
                                     <h1>{{$data['name']}}</h1>
                                     <hr>
@@ -40,12 +40,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6 col-sm-4 col-xs-8">
+                            <div class="col-lg-6 col-sm-6 col-xs-8">
                                 <div class="item-info">
                                     @include('layouts/'.$data['category'])
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-sm-2 col-xs-4">
+                            <div class="col-lg-3 col-sm-3 col-xs-4">
                                 @if ($data['availability'])
                                     <div class="availability">Є в наявності</div>
                                 @else

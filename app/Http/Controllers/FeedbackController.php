@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Feedback;
 use App\Http\Requests\FeedbackRequest;
 use Illuminate\Http\Request;
+use App\Helpers\SendMail;
 
 class FeedbackController extends Controller
 {
@@ -35,8 +36,8 @@ class FeedbackController extends Controller
     {
 
     }
-    //Отримання даних з форми (за допомогою AJAX запиту) і створення моделі
-    public function story (FeedbackRequest $request)
+    //Отримання даних з форми (за допомогою AJAX запиту), створення моделі і відправка повідомлення на пошту
+    public function story (FeedbackRequest $request, SendMail $mail)
     {
         $userName = $request->input('userName');
         $phone = $request->input('phone') ;
@@ -45,6 +46,7 @@ class FeedbackController extends Controller
             'phone' => $phone,
             'viewed' => 0
         ]);
+        $mail->feedbackMail($userName, $phone);
         return "Success";
     }
 }

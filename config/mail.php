@@ -7,9 +7,9 @@ return [
     | Mail Driver
     |--------------------------------------------------------------------------
     |
-    | Laravel supports both SMTP and PHP's "mail" function as drivers for the
-    | sending of e-mail. You may specify which one you're using throughout
-    | your application here. By default, Laravel is setup for SMTP mail.
+    | Laravel supports both SMTP and PHP's "emails" function as drivers for the
+    | sending of e-emails. You may specify which one you're using throughout
+    | your application here. By default, Laravel is setup for SMTP emails.
     |
     | Supported: "smtp", "sendmail", "mailgun", "mandrill", "ses",
     |            "sparkpost", "log", "array"
@@ -25,7 +25,7 @@ return [
     |
     | Here you may provide the host address of the SMTP server used by your
     | applications. A default option is provided that is compatible with
-    | the Mailgun mail service which will provide reliable deliveries.
+    | the Mailgun emails service which will provide reliable deliveries.
     |
     */
 
@@ -38,7 +38,7 @@ return [
     |
     | This is the SMTP port used by your application to deliver e-mails to
     | users of the application. Like the host we have set this value to
-    | stay compatible with the Mailgun e-mail application by default.
+    | stay compatible with the Mailgun e-emails application by default.
     |
     */
 
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'cilen@ukr.net'),
+        'name' => env('MAIL_FROM_NAME', 'Dveri.loc'),
     ],
 
     /*
@@ -66,7 +66,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may specify the encryption protocol that should be used when
-    | the application send e-mail messages. A sensible default using the
+    | the application send e-emails messages. A sensible default using the
     | transport layer security protocol should provide great security.
     |
     */
@@ -116,7 +116,7 @@ return [
         'theme' => 'default',
 
         'paths' => [
-            resource_path('views/vendor/mail'),
+            resource_path('views/vendor/emails'),
         ],
     ],
 
