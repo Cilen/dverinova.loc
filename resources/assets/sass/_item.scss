@@ -1,53 +1,68 @@
-.logo-block{
-  .slider-for{
-    img{
+.logo-block {
+  .slider-for {
+    img {
       margin: 15px auto;
       border: none;
     }
   }
-  .slider-nav{
-    .slick-slide{
+  .slider-nav {
+    .slick-slide {
       height: 100px;
-      img{
+      img {
         margin: 0 auto;
       }
     }
-    .slick-current{
+    .slick-current {
       filter: grayscale(100%);
     }
   }
 }
 
-.item-info{
+.item-info {
   li {
     list-style: none;
     margin-top: 1em;
   }
-  .item-price-without-discount{
+  .item-price-without-discount {
     font-size: 1em;
     text-decoration: line-through;
     line-height: 1;
     color: #444;
   }
-  .item-price-total{
-    font-size: 1.8em;
-    line-height: 1;
-    color: red;
-    margin-bottom: 20px;
-  }
 
-  .availability{
+  .total-info {
+    font-weight: 500;
     font-size: 1em;
-    color: #5DA30C;
+    line-height: 2em;
+    .item-price-detail {
+      span {
+        font-size: 1.2em;
+        font-weight: 500;
+      }
+      .item-price-total {
+        font-size: 1.6em;
+        color: red;
+        font-weight: 600;
+      }
+    }
+    .availability {
+      color: #5DA30C;
+    }
+    .no-availability {
+      color: red;
+    }
+    .item-id {
+      font-weight: 700;
+    }
   }
-  .no-availability{
-    font-size: 1em;
-    color: #444;
+}
+#app {
+  h5 {
+    font-weight: bold;
+    margin-top: 20px;
   }
-  .item-id{
-    font-size: 1em;
-    font-weight: 700;
-    margin-bottom: 20px;
+  label {
+    font-weight: normal;
   }
 }
 

@@ -9209,6 +9209,9 @@ a {
     border: none;
     outline: none; }
 
+[v-cloak] {
+  display: none; }
+
 .logo-block .slider-for img {
   margin: 15px auto;
   border: none; }
@@ -9232,24 +9235,30 @@ a {
   line-height: 1;
   color: #444; }
 
-.item-info .item-price-total {
-  font-size: 1.8em;
-  line-height: 1;
-  color: red;
-  margin-bottom: 20px; }
-
-.item-info .availability {
+.item-info .total-info {
+  font-weight: 500;
   font-size: 1em;
-  color: #5DA30C; }
+  line-height: 2em; }
+  .item-info .total-info .item-price-detail span {
+    font-size: 1.2em;
+    font-weight: 500; }
+  .item-info .total-info .item-price-detail .item-price-total {
+    font-size: 1.6em;
+    color: red;
+    font-weight: 600; }
+  .item-info .total-info .availability {
+    color: #5DA30C; }
+  .item-info .total-info .no-availability {
+    color: red; }
+  .item-info .total-info .item-id {
+    font-weight: 700; }
 
-.item-info .no-availability {
-  font-size: 1em;
-  color: #444; }
+#app h5 {
+  font-weight: bold;
+  margin-top: 20px; }
 
-.item-info .item-id {
-  font-size: 1em;
-  font-weight: 700;
-  margin-bottom: 20px; }
+#app label {
+  font-weight: normal; }
 
 .category-title h2 {
   margin-top: 0; }

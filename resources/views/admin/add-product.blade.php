@@ -270,24 +270,6 @@
                 }
             });
         }
-        {{--$("#buttonDelete").click(function(e) {--}}
-            {{--e.preventDefault();--}}
-            {{--$.ajax({--}}
-                {{--type: "POST",--}}
-                {{--url: "{{url('admin/product/'.$data['id_product'])}}",--}}
-                {{--data: {--}}
-                    {{--_method: "DELETE",--}}
-                    {{--id_product: {{$data['id_product']}},--}}
-                    {{--access_token: $("#access_token").val()--}}
-                {{--},--}}
-                {{--success: function(result) {--}}
-                    {{--alert('ok');--}}
-                {{--},--}}
-                {{--error: function(result) {--}}
-                    {{--alert('error');--}}
-                {{--}--}}
-            {{--});--}}
-        {{--});--}}
 
 
     </script>

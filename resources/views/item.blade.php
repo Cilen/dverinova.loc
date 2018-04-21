@@ -46,39 +46,37 @@
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-3 col-xs-4">
-                                @if ($data['availability'])
-                                    <div class="availability">Є в наявності</div>
-                                @else
-                                    <div class="no-availability">Товар закінчився</div>
-                                @endif
-                                <div class="item-id">Код: {{str_pad($data['id_product'], 4, "0", STR_PAD_LEFT)}}</div>
-                                @if ($data['discount'])
-                                    <div class="item-price-without-discount">{{$data['price']}}, грн</div>
-                                    <div class="item-price-total">{{$data['total_price']}}, грн</div>
-                                @else
-                                <div class="item-price">{{$data['price']}}, грн</div>
-                                @endif
+                                <div class="total-info">
+                                    @if ($data['availability'])
+                                        <div class="availability">Є в наявності</div>
+                                    @else
+                                        <div class="no-availability">Товар закінчився</div>
+                                    @endif
+                                    <div class="item-id">Код: {{str_pad($data['id_product'], 4, "0", STR_PAD_LEFT)}}</div>
+                                    @if ($data['category'] == 'internalDoor')
+                                        <div class="item-price-detail">Ціна за полотно: <span v-cloak>@{{polotnoPrice}}</span> грн</div>
+                                        <div class="item-price-detail">Погонаж: <span v-cloak>@{{pohonazhPrice}}</span> грн</div>
+                                        <div class="item-price-detail">Ціна комплекту: <span class="item-price-total" v-cloak>@{{totalPrice}}</span> грн</div>
+                                    @else
+                                        <div class="item-price-detail">{{$data['price']}} грн</div>
+                                    @endif
 
-                                 <a href="#" class="btn btn-success btn-block btn-lg active" role="button"  data-toggle="modal" data-target=".bayModal">Купити</a>
-                                 <a href="#" class="btn btn-success btn-block btn-lg active" role="button"  data-toggle="modal" data-target=".feedbackModal">Подзвони мені</a>
-
+                                    <a href="#" class="btn btn-success btn-block btn-lg active" role="button" data-toggle="modal" data-target=".bayModal">Купити</a>
+                                    <a href="#" class="btn btn-success btn-block btn-lg active" role="button" data-toggle="modal" data-target=".feedbackModal">Передзвоніть мені</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
-
         </div>
     </div>
-    @include('layouts.feedbackModal')
     @include('layouts.orderModal')
 
 
 @endsection
 @section('scripts')
+    @yield('item-scripts')
     <script>
         $(document).ready(function(){
             $('.slider-for').slick({

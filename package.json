@@ -12,8 +12,7 @@
     "gulp-autoprefixer": "^3.1.1",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^3.1.0",
-    "gulp-uglifyjs": "^0.6.2",
-    "lodash": "^4.17.4"
+    "gulp-uglifyjs": "^0.6.2"
   },
   "devDependencies": {
     "bootstrap": "^3.3.7",
