@@ -20521,6 +20521,26 @@ $("#feedback").submit(function(e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 
 });
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+    state: {
+        prices: [0,0,0]
+    },
+    actions: {},
+    mutations: {
+        savePrices(state, prices){
+            state.prices = prices
+        },
+    },
+    getters: {
+        getPrices(state, getters){
+            return state.prices;
+        }
+    },
+    modules: {}
+});
 /*!
  * Lightbox v2.9.0
  * by Lokesh Dhakar

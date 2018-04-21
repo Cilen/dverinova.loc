@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-3 col-xs-4">
-                                <div class="total-info">
+                                <div id="total-info" class="total-info">
                                     @if ($data['availability'])
                                         <div class="availability">Є в наявності</div>
                                     @else
@@ -78,6 +78,7 @@
 @section('scripts')
     @yield('item-scripts')
     <script>
+
         $(document).ready(function(){
             $('.slider-for').slick({
                 slidesToShow: 1,
@@ -96,6 +97,32 @@
                 focusOnSelect: true,
             });
         });
+
+        var totalInfo = new Vue({
+            el: '#total-info',
+            store,
+            data: {
+            },
+            computed: {
+                prices() {
+                    return this.$store.getters.getPrices;
+                },
+                polotnoPrice(){
+                    return this.prices[1];
+
+                },
+                pohonazhPrice(){
+                    return this.prices[0];
+                },
+                totalPrice(){
+                    return this.prices[2];
+                },
+            },
+            methods: {
+
+            }
+        });
+
     </script>
 
 @endsection

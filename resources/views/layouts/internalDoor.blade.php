@@ -1,112 +1,117 @@
-<div class="row">
-    <div class="door-type">
-        <div class="col-sm-6">
-            <input type="radio" name="door-type" id="single" value="1" v-model.number="checkedType" checked>
-            <label for="single"><img src="/images/door1.png"> Одинарні</label>
-        </div>
-        <div class="col-sm-6">
-            <input type="radio" name="door-type" id="double" value="2" v-model.number="checkedType">
-            <label for="double"><img src="/images/door2.png"> Подвійні</label>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <h5>Розмір полотна</h5>
-        <template v-for="(availability, name, index) in itemData.polotno" v-if="availability == 1">
-            <div>
-                <label>
-                    <input type="radio" name="size-door1" v-bind:value="index" v-model="sizeDoor1">
-                    @{{name}}
-                    <span class="addition-price" v-if="price.polotno[index] != 0"> (+@{{ price.polotno[index] }} грн)</span>
-                </label>
+<div id="internal-door-form">
+    <div class="row">
+        <div class="door-type">
+            <div class="col-sm-6">
+                <input type="radio" name="door-type" id="single" value="1" v-model.number="checkedType" checked>
+                <label for="single"><img src="/images/door1.png"> Одинарні</label>
             </div>
-        </template>
+            <div class="col-sm-6">
+                <input type="radio" name="door-type" id="double" value="2" v-model.number="checkedType">
+                <label for="double"><img src="/images/door2.png"> Подвійні</label>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-6">
-        <template v-if="checkedType == 2">
-            <h5>Розмір 2-го полотна</h5>
+    <div class="row">
+        <div class="col-sm-6">
+            <h5>Розмір полотна</h5>
             <template v-for="(availability, name, index) in itemData.polotno" v-if="availability == 1">
                 <div>
                     <label>
-                        <input type="radio" name="size-door2" v-bind:value="index" v-model="sizeDoor2">
+                        <input type="radio" name="size-door1" v-bind:value="index" v-model="sizeDoor1">
                         @{{name}}
                         <span class="addition-price" v-if="price.polotno[index] != 0"> (+@{{ price.polotno[index] }} грн)</span>
                     </label>
                 </div>
             </template>
-        </template>
+        </div>
+        <div class="col-sm-6">
+            <template v-if="checkedType == 2">
+                <h5>Розмір 2-го полотна</h5>
+                <template v-for="(availability, name, index) in itemData.polotno" v-if="availability == 1">
+                    <div>
+                        <label>
+                            <input type="radio" name="size-door2" v-bind:value="index" v-model="sizeDoor2">
+                            @{{name}}
+                            <span class="addition-price" v-if="price.polotno[index] != 0"> (+@{{ price.polotno[index] }} грн)</span>
+                        </label>
+                    </div>
+                </template>
+            </template>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <h5>Дверна коробка</h5>
-        <template v-for="(availability, name, index) in itemData.box" v-if="availability == 1">
-            <div>
-                <label>
-                    <input type="radio" name="box" v-bind:value="index" v-model="box">
-                    @{{ name }}
-                    <span class="addition-price" v-if="price.box[index] != 0"> (+@{{ price.box[index] }} грн)</span>
-                </label>
-            </div>
-        </template>
-    </div>
-    <div class="col-sm-6">
-        <template v-if="(box != null) && (itemData.doorstep.length != 0)">
-            <h5>Поріг</h5>
-            <template v-for="(availability, name, index) in itemData.doorstep" v-if="availability == 1">
+    <div class="row">
+        <div class="col-sm-6">
+            <h5>Дверна коробка</h5>
+            <template v-for="(availability, name, index) in itemData.box" v-if="availability == 1">
                 <div>
                     <label>
-                        <input type="radio" name="doorstep" v-bind:value="index" v-model="doorstep">
+                        <input type="radio" name="box" v-bind:value="index" v-model="box">
                         @{{ name }}
-                        <span class="addition-price" v-if="price.doorstep[index] != 0"> (+@{{ price.doorstep[index] }} грн)</span>
+                        <span class="addition-price" v-if="price.box[index] != 0"> (+@{{ price.box[index] }} грн)</span>
                     </label>
                 </div>
             </template>
-        </template>
+        </div>
+        <div class="col-sm-6">
+            <template v-if="(box != null) && (itemData.doorstep.length != 0)">
+                <h5>Поріг</h5>
+                <template v-for="(availability, name, index) in itemData.doorstep" v-if="availability == 1">
+                    <div>
+                        <label>
+                            <input type="radio" name="doorstep" v-bind:value="index" v-model="doorstep">
+                            @{{ name }}
+                            <span class="addition-price" v-if="price.doorstep[index] != 0"> (+@{{ price.doorstep[index] }} грн)</span>
+                        </label>
+                    </div>
+                </template>
+            </template>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <h5>Лиштва</h5>
-        <template v-for="(availability, name, index) in itemData.lishtva" v-if="availability == 1">
-            <div>
-                <label>
-                    <input type="radio" name="lishtva" v-bind:value="index" v-model="lishtva">
-                    @{{name}}
-                    <span class="addition-price" v-if="price.lishtva[index] != 0">(+@{{ price.lishtva[index] }} грн)</span>
-                </label>
-            </div>
-        </template>
-    </div>
-    <div class="col-sm-6">
-        <h5>Добірна дошка</h5>
-        <template v-for="(availability, name, index) in itemData.dobir" v-if="availability == 1">
-            <div>
-                <label>
-                    <input type="radio" name="dobir" v-bind:value="index" v-model="dobir">
-                    @{{name}}
-                    <span class="addition-price" v-if="price.dobir[index] != 0"> (+@{{ price.dobir[index] }} грн)</span>
-                </label>
-            </div>
-        </template>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <template v-if="checkedType == 2">
-            <h5>Притворна планка</h5>
-            <template v-for="(availability, name, index) in itemData.planka" v-if="availability == 1">
+    <div class="row">
+        <div class="col-sm-6">
+            <h5>Лиштва</h5>
+            <template v-for="(availability, name, index) in itemData.lishtva" v-if="availability == 1">
                 <div>
                     <label>
-                        <input type="radio" name="planka" v-bind:value="index" v-model="planka">
+                        <input type="radio" name="lishtva" v-bind:value="index" v-model="lishtva">
                         @{{name}}
-                        <span class="addition-price" v-if="price.planka[index] != 0"> (+@{{ price.planka[index] }} грн)</span>
+                        <span class="addition-price"
+                              v-if="price.lishtva[index] != 0">(+@{{ price.lishtva[index] }} грн)</span>
                     </label>
                 </div>
             </template>
-        </template>
+        </div>
+        <div class="col-sm-6">
+            <h5>Добірна дошка</h5>
+            <template v-for="(availability, name, index) in itemData.dobir" v-if="availability == 1">
+                <div>
+                    <label>
+                        <input type="radio" name="dobir" v-bind:value="index" v-model="dobir">
+                        @{{name}}
+                        <span class="addition-price"
+                              v-if="price.dobir[index] != 0"> (+@{{ price.dobir[index] }} грн)</span>
+                    </label>
+                </div>
+            </template>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <template v-if="checkedType == 2">
+                <h5>Притворна планка</h5>
+                <template v-for="(availability, name, index) in itemData.planka" v-if="availability == 1">
+                    <div>
+                        <label>
+                            <input type="radio" name="planka" v-bind:value="index" v-model="planka">
+                            @{{name}}
+                            <span class="addition-price" v-if="price.planka[index] != 0"> (+@{{ price.planka[index] }} грн)</span>
+                        </label>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </div>
+
 </div>
 
 
@@ -177,9 +182,9 @@
                 doorstep: [0, 153]
             },
         }
-
         var itemForm = new Vue({
-            el: '#app',
+            el: '#internal-door-form',
+            store,
             data: {
                 itemData: itemData,
                 checkedType: 1,
@@ -219,7 +224,7 @@
                     }
                 },
                 totalPrice: function () {
-                    return (this.polotnoPrice + this.pohonazhPrice);
+                    return (this.polotnoPrice + this.pohonazhPrice)
                 },
                 price: function () {
                     if (this.checkedType == 1) {
@@ -229,7 +234,19 @@
                     }
                 }
             },
+            created:function(){
+                this.loadPricesToStore();
+            },
+            watch: {
+                totalPrice:function () {
+                    this.loadPricesToStore()
+                },
+            },
+            methods: {
+                loadPricesToStore(){
+                    store.commit('savePrices', [this.polotnoPrice, this.pohonazhPrice, this.totalPrice])
+                }
+            },
         })
-
     </script>
 @endsection
