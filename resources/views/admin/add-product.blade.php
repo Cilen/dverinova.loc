@@ -18,7 +18,7 @@
                 </div>
             @endif
             <a href="{{action('ProductController@index')}}" class="btn btn-warning" title="Повернутись до таблиці товарів"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a>
-            <form method="post" action="{{url('admin/product/'.$data['id_product'])}}" class="form-horizontal" id="add-product-form">
+            <form id="addItemForm" method="post" action="{{url('admin/product/'.$data['id_product'])}}" class="form-horizontal" id="add-product-form">
                 @if ($data['update'])
                     <input type="hidden" name="_method" value="PUT">
                 @endif

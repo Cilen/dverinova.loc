@@ -108,11 +108,11 @@
                     return this.$store.getters.getPrices;
                 },
                 polotnoPrice(){
-                    return this.prices[1];
+                    return this.prices[0];
 
                 },
                 pohonazhPrice(){
-                    return this.prices[0];
+                    return this.prices[1];
                 },
                 totalPrice(){
                     return this.prices[2];
