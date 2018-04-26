@@ -23,6 +23,7 @@ class CreateInternalDoorsTable extends Migration
             $table->boolean('size_70');
             $table->boolean('size_80');
             $table->boolean('size_90');
+            $table->integer('height');
             $table->timestamps();
         });
     }

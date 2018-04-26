@@ -20,6 +20,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'HomeController@index');
     Route::post('product/updateAjaxData', 'ProductController@updateAjaxData');
     Route::resource('product', 'ProductController');
+    Route::get('accessories', function (){
+        return view('admin/accessories');
+    });
 
     Route::get('orders', 'OrderController@index');
     Route::patch('orders/{idOrder}', 'OrderController@update');

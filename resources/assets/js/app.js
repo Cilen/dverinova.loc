@@ -66,7 +66,7 @@ function updateProductForm(el){
             hideBlock();
     };
 };
-//
+
 // $('#buyProduct').submit(function(eventObject){
 //     $('.bayModal').modal('hide');
 //     console.log(eventObject);

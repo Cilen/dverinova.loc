@@ -25,16 +25,13 @@ class ProductController extends Controller
         "total_price" => "0",
         "description" => "",
         "type" => "",
-        "size_60" => "0",
-        "size_70" => "0",
-        "size_80" => "0",
-        "size_90" => "0",
+        "size_60" => 0,
+        "size_70" => 0,
+        "size_80" => 0,
+        "size_90" => 0,
         "height" => "0",
         "width" => "0",
         "thickness" => "0",
-        "lock" => "0",
-        "filler" => "",
-        "covering" => "",
         "length" => "0",
         "number_in_package" => "0",
         "total_area" => "0",
@@ -89,6 +86,7 @@ class ProductController extends Controller
             case 'internalDoor':
                 $product->internalDoor()->create([
                     'type' => $request->input('type'),
+                    'height' => $request->input('height'),
                     'size_60' => $request->input('size_60'),
                     'size_70' => $request->input('size_70'),
                     'size_80' => $request->input('size_80'),
@@ -99,11 +97,7 @@ class ProductController extends Controller
             case 'externalDoor';
                 $product->externalDoor()->create([
                     'height' => $request->input('height'),
-                    'width' => $request->input('width'),
-                    'thickness' => $request->input('thickness'),
-                    'lock' => $request->input('lock'),
-                    'filler' => $request->input('filler'),
-                    'covering' => $request->input('covering'),
+                    'width' => $request->input('width')
                 ]);
                 break;
             case 'laminate':
@@ -172,6 +166,7 @@ class ProductController extends Controller
             case 'internalDoor':
                 $product->internalDoor()->update([
                     'type' => $request->input('type'),
+                    'height' => $request->input('height'),
                     'size_60' => $request->input('size_60'),
                     'size_70' => $request->input('size_70'),
                     'size_80' => $request->input('size_80'),
@@ -183,10 +178,6 @@ class ProductController extends Controller
                 $product->externalDoor()->update([
                     'height' => $request->input('height'),
                     'width' => $request->input('width'),
-                    'thickness' => $request->input('thickness'),
-                    'lock' => $request->input('lock'),
-                    'filler' => $request->input('filler'),
-                    'covering' => $request->input('covering'),
                 ]);
                 break;
             case 'laminate':

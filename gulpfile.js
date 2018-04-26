@@ -15,8 +15,6 @@ gulp.task('sass', function(){ // Создаем таск "sass"
 
 gulp.task('scripts', function() {
     return gulp.src([ // Берем все необходимые библиотеки
-        'node_modules/jquery/dist/jquery.js', // Берем jQuery
-        'resources/assets/js/vendor/jquery-ui.min.js', // Берем jQuery-UI
         'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js', //Беремо bootstrap.js
         'resources/assets/js/vendor/menu/modernizr.custom.js', // меню
         'resources/assets/js/vendor/menu/cbpHorizontalSlideOutMenu.js', // меню

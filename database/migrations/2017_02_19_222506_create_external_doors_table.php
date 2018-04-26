@@ -21,10 +21,6 @@ class CreateExternalDoorsTable extends Migration
 
             $table->integer('height');
             $table->integer('width');
-            $table->integer('thickness')->nullable();
-            $table->integer('lock')->nullable(); //кількість замків
-            $table->string('filler', 100)->nullable(); //наповнювач
-            $table->string('covering', 100)->nullable(); //покриття
             $table->timestamps();
         });
     }
