@@ -32,7 +32,7 @@
                 {title: "Знижка", field: "discount", sorter: "number", align: "right", editable: true, width: "85"},
                 {title: "Ціна зі знижкою", field: "total_price", sorter: "number", align: "right", formatter:"money", width: "140"},
                 {title: "Топ",field: "top", sorter: "boolean",align: "center",formatter: "tick", editable: true, width: "60"},
-                {title: "Виробник", field: "producer", sorter: "string", align: "left", width: "160"},
+                {title: "Виробник", field: "id_producer", sorter: "string", align: "left", width: "160"},
                 {align:"center", width: "60", formatter:function(value, data, cell, row, options, formatterParams){
                     return "<a href=\"product/" + data['id_product'] + "/edit\" class=\"btn btn-success btn-lg btn-xs\" role=\"button\"><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i></a>"; // must return the html or jquery element of the html for the contents of the cell;
                 },
@@ -51,7 +51,7 @@
                     "discount": rowData.discount,
                     "total_price": rowData.total_price,
                     "top": rowData.top == true ? 1: 0,
-                    "producer": rowData.producer,
+                    "id_producer": rowData.id_producer,
                 };
                 $.ajax({
                     type: "POST",
@@ -90,7 +90,7 @@
                             "discount": rowData.discount,
                             "total_price": rowData.total_price,
                             "top": rowData.top,
-                            "producer": rowData.producer,
+                            "id_producer": rowData.id_producer,
                         };
                         oldRowData[data] = oldVal;
                         $("#product-table").tabulator("updateRow", oldRowData.id_product, oldRowData);

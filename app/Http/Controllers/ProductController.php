@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\InternalDoor;
+use App\OtherData;
 use App\Product;
 use App\ProdImage;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class ProductController extends Controller
         "category" => "",
         "name" => "",
         "availability" => "1",
-        "producer" => "",
+        "id_producer" => "",
         "price" => "0",
         "discount" => "0",
         "total_price" => "0",
@@ -35,6 +36,10 @@ class ProductController extends Controller
         "length" => "0",
         "number_in_package" => "0",
         "total_area" => "0",
+        "numberOtherData" => 1,
+        "otherData" => array(
+            0 => array("name" => "", "value" => ""),
+        )
     );
     //Перегляд всіх товарів в Адмін-таблиці
     public function index()
@@ -65,7 +70,7 @@ class ProductController extends Controller
     public function create()
     {
 
-        $data['title'] = 'Додати новий товар';
+        $this->data['title'] = 'Додати новий товар';
         return view('admin.add-product')->with("data", $this->data);
     }
     //Отримання даних з форми і створення моделі
@@ -79,7 +84,7 @@ class ProductController extends Controller
             'discount' => $request->input('discount'),
             'total_price' => ($request->input('price') * (100 - $request->input('discount') ) / 100 ),
             'description' => $request->input('description'),
-            'producer' => $request->input('producer'),
+            'id_producer' => $request->input('id_producer'),
             'top' => 0
         ]);
         switch ($request->input('category')) {
@@ -121,6 +126,17 @@ class ProductController extends Controller
             default:
                 return 'Error: Unknown category';
         }
+        $numberOtherData = $request->input('numberOtherData');
+        for($i = 0; $i < $numberOtherData; $i++) {
+            $name = $request->input('otherDataName_'.$i);
+            $value = $request->input('otherDataValue_'.$i);
+            if ($name != null && $value != null) {
+                $product->otherData()->create([
+                    'name' => $name,
+                    'value' => $value,
+                ]);
+            };
+        }
         return redirect('admin/product/'.$product->id_product.'/edit');
     }
     //Сторінка конкретного продукту
@@ -131,8 +147,9 @@ class ProductController extends Controller
         $type = $request->route('type');
         $product = Product::find($idProduct);
         $model = $product->$category()->first()->toArray();
+        $producer = $product->producer()->first()->toArray();
         $product = $product->toArray();
-        $data = array_replace($this->data, $product, $model);
+        $data = array_replace($this->data, $product, $model, $producer);
         $images = ProdImage::where('id_product', $idProduct)->get()->toArray();
         return view('item')->with(['data' => $data, 'images' => $images]);
     }
@@ -142,10 +159,14 @@ class ProductController extends Controller
         $product = Product::find($id);
         $category = $product->category;
         $model = $product->$category()->first()->toArray();
+        $producer = $product -> producer()->first()->toArray();
+        $otherData = $product -> otherData()->select('id_data','name', 'value')->get()->toArray();
         $product = $product->toArray();
-        $data = array_replace($this->data, $product, $model);
+        $otherData = array('otherData' => $otherData);
+        $data = array_replace($this->data, $product, $model, $producer, $otherData);
         $data['title'] = 'Редагувати товар';
         $data['update'] = true;
+        $data['numberOtherData'] = count($data['otherData']);
         return view('admin.add-product')->with("data", $data);
     }
     //Виконати редагування даних за допомогою форми редагування даних
@@ -160,7 +181,7 @@ class ProductController extends Controller
             'discount' => $request->input('discount'),
             'total_price' => ($request->input('price') * (100 - $request->input('discount') ) / 100 ),
             'description' => $request->input('description'),
-            'producer' => $request->input('producer'),
+            'id_producer' => $request->input('id_producer'),
         ]);
         switch ($request->input('category')) {
             case 'internalDoor':
@@ -201,6 +222,27 @@ class ProductController extends Controller
             default:
                 return 'Error: Unknown category';
         }
+        $numberOtherData = $request->input('numberOtherData');
+        for($i = 0; $i < $numberOtherData; $i++) {
+            $id_data = $request->input('id_data_'.$i);
+            $name = $request->input('otherDataName_'.$i);
+            $value = $request->input('otherDataValue_'.$i);
+            if ($name != null && !empty($id_data)) {
+                $product->otherData()->where('id_data', $id_data)->update([
+                    'name' => $name,
+                    'value' => $value,
+                ]);
+            } elseif ($name != null) {
+                $product->otherData()->create([
+                    'name' => $name,
+                    'value' => $value,
+                ]);
+            } elseif (empty($name) && !empty($id_data)) {
+                $this->removeOtherData($id_data);
+            } else {
+                return 'Error: Unknown otherData';
+            };
+        }
         return redirect()->action('ProductController@edit', ['id' => $id]);
     }
     //Виконати редагування даних за допомогою таблиці
@@ -222,5 +264,9 @@ class ProductController extends Controller
         ImageController::deleteId($id);
         Product::find($id)->forceDelete();
         return redirect()->action('ProductController@index');
+    }
+    public function removeOtherData($id_data){
+        OtherData::find($id_data)->forceDelete();
+        return "OtherData was removed";
     }
 }

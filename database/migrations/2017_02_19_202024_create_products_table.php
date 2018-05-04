@@ -18,7 +18,10 @@ class CreateProductsTable extends Migration
             $table->integer('discount')->nullable();
             $table->float('total_price')->nullable();
             $table->text('description')->nullable(); //Опис
-            $table->string('producer', 20)->nullable(); //Виробник
+            $table->integer('id_producer')->nullable()
+                ->references('id_producer')->on('producers')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('uuid')->nullable();
             $table->timestamps();
         });

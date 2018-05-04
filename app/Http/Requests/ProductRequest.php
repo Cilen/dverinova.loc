@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
             'category' => 'required|in:internalDoor,externalDoor,laminate,tile',
             'name' => 'required|max:100',
             'availability' => 'boolean',
-            'producer' => 'max:30',
+            'id_producer' => 'integer|nullable',
             'price' => 'numeric|nullable|min:0|max:999999',
             'discount' => 'integer|nullable|between:0,100',
             'top' => 'boolean',
@@ -42,10 +42,6 @@ class ProductRequest extends FormRequest
             //Вхідні двері
             'height' => 'required_if:category,externalDoor|nullable|integer|min:0',
             'width' => 'required_if:category,externalDoor|nullable|integer|min:0',
-            'thickness' => 'integer|nullable|min:0',
-            'lock' => 'integer|nullable|min:0|max:5',
-            'filler' => 'max:100',
-            'covering' => 'max:100',
             //Ламінат, плитка
             'length' => 'required_if:category,laminate,tile|nullable|integer|min:0',
             'width' => 'required_if:category,laminate,tile|nullable|integer|min:0',

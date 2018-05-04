@@ -10173,68 +10173,18 @@ function showBlock (id) {
 function hideBlock () {
     $('#add-product-form .form-group:nth-of-type(n+2)').hide();
 };
-function updateProductForm(el){
-    hideBlock();
-    var category = $(el).val();
-    switch (category) {
-        case 'internalDoor':
-            showBlock('name');
-            showBlock('type');
-            showBlock('availability');
-            showBlock('size')
-            showBlock('producer');
-            showBlock('price');
-            showBlock('discount');
-            showBlock('description');
-            showBlock('submit');
-            break;
-        case 'externalDoor':
-            showBlock('name');
-            showBlock('availability');
-            showBlock('producer');
-            showBlock('price');
-            showBlock('discount');
-            showBlock('description');
-            showBlock('submit');
-            showBlock('height');
-            showBlock('width');
-            showBlock('thickness');
-            showBlock('lock');
-            showBlock('filler');
-            showBlock('covering');
-            break;
-        case 'laminate':
-            showBlock('name');
-            showBlock('availability');
-            showBlock('producer');
-            showBlock('price');
-            showBlock('discount');
-            showBlock('description');
-            showBlock('submit');
-            showBlock('length');
-            showBlock('width');
-            showBlock('thickness');
-            showBlock('number_in_package');
-            showBlock('total_area');
-            break;
-        case 'tile':
-            showBlock('name');
-            showBlock('availability');
-            showBlock('producer');
-            showBlock('price');
-            showBlock('discount');
-            showBlock('description');
-            showBlock('submit');
-            showBlock('length');
-            showBlock('width');
-            showBlock('thickness');
-            showBlock('number_in_package');
-            showBlock('total_area');
-            break;
-        default:
-            hideBlock();
-    };
+
+function runToastmessage(text) {
+    $().toastmessage('showToast', {
+        text     : text,
+        sticky   : false,
+        inEffectDuration:  600,
+        stayTime: 3000,
+        position : 'top-right',
+        type     : 'success',
+    });
 };
+
 
 // $('#buyProduct').submit(function(eventObject){
 //     $('.bayModal').modal('hide');

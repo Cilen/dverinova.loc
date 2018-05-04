@@ -18,7 +18,6 @@ class CreateExternalDoorsTable extends Migration
             $table->foreign('id_product')->references('id_product')->on('products')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-
             $table->integer('height');
             $table->integer('width');
             $table->timestamps();

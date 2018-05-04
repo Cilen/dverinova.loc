@@ -17,6 +17,7 @@
                     <li class="pushy-link"><a href="{{ url('admin/product') }}">Огляд</a></li>
                     <li class="pushy-link"><a href="{{ url('admin/product/create') }}">Додати товар</a></li>
                     <li class="pushy-link"><a href="{{ url('admin/accessories') }}">Комплектуючі</a></li>
+                    <li class="pushy-link"><a href="{{ url('admin/producers') }}">Виробники</a></li>
                 </ul>
             </li>
             <li class="pushy-submenu">

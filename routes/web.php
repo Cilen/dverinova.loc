@@ -18,11 +18,17 @@ Route::post('newfeedback', 'FeedbackController@story')->name('newfeedback');
 Auth::routes();
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'HomeController@index');
+
     Route::post('product/updateAjaxData', 'ProductController@updateAjaxData');
+    Route::get('product/remove-other-data/{id_data}', 'ProductController@removeOtherData');
     Route::resource('product', 'ProductController');
-    Route::get('accessories', function (){
-        return view('admin/accessories');
-    });
+
+    Route::get('accessories/type/{category}', 'AccessoriesController@getTypeAccessoriesByCategory');
+    Route::get('accessories/producer/{id_producer}', 'AccessoriesController@getAccessoriesByProducer');
+    Route::resource('accessories', 'AccessoriesController');
+
+    Route::get('producers/{category}', 'ProducerController@getProducersFromCategory');
+    Route::resource('producers', 'ProducerController');
 
     Route::get('orders', 'OrderController@index');
     Route::patch('orders/{idOrder}', 'OrderController@update');
@@ -38,4 +44,3 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('images/logo', 'ImageController@setLogo');
 
 });
-
