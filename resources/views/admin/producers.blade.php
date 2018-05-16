@@ -151,7 +151,7 @@
                     })
                         .then(response => {
                             this.incomingData = response.data;
-                            runToastmessage('Виробник успішно доданий в базу даних');
+                            runToastmessage('Виробник успішно внесений в базу даних');
                         })
                         .catch(function (error) {
                             console.log(error);

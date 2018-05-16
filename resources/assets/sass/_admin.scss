@@ -46,7 +46,12 @@
   vertical-align: sub;
   display: inline-block;
 }
-
-.accessories-name {
-  margin-top: 20px;
+#accessoriesForm{
+  .accessories-name {
+    margin-top: 20px;
+  }
+  .price{
+    text-align: right;
+    margin-top: 1px;
+  }
 }

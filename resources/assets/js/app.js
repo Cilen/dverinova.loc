@@ -5,14 +5,15 @@ function hideBlock () {
     $('#add-product-form .form-group:nth-of-type(n+2)').hide();
 };
 
-function runToastmessage(text) {
+function runToastmessage(text, type) {
+    type = type || 'success';  // "notice", "success", "warning", "error"
     $().toastmessage('showToast', {
         text     : text,
         sticky   : false,
         inEffectDuration:  600,
         stayTime: 3000,
         position : 'top-right',
-        type     : 'success',
+        type     : type,
     });
 };
 
@@ -88,3 +89,4 @@ const store = new Vuex.Store({
     },
     modules: {}
 });
+

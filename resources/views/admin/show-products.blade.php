@@ -59,12 +59,7 @@
                     data: send,
                     async: true,
                     success: function (data) {
-                        $().toastmessage('showToast', {
-                            text     : 'Зміни успішно внесені в базу даних',
-                            sticky   : true,
-                            position : 'top-right',
-                            type     : 'success',
-                        });
+                        runToastmessage('Зміни успішно внесені в базу даних');
                         var rowData = JSON.parse(data);
                         var row = rowData.id_product;
                         $("#product-table").tabulator("updateRow", row, data);
@@ -72,14 +67,7 @@
                     error: function (xhr, textStatus, errorThrown) {
                         var resp = $.parseJSON(xhr.responseText);
                         $.each(resp,function(index,value){
-                            $().toastmessage('showToast', {
-                                text     : value,
-                                inEffectDuration:  600,
-                                stayTime:         3000,
-                                sticky   : true,
-                                position : 'top-right',
-                                type     : 'error',
-                            });
+                            runToastmessage(value, 'error')
                         });
                         var oldRowData = {
                             "id_product": rowData.id_product ,

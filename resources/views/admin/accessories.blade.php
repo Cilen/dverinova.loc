@@ -11,7 +11,7 @@
         <div class="row" id="accessoriesForm">
             <div class="col-sm-4">
                 <div class="form-group" data-block="category">
-                    <label for="category" class="">Категорія товару</label>
+                    <h5 for="category" class="">Категорія товару</h5>
                     <select class="form-control" id="category" name="category" v-model="formData.category"
                             @click="getProducersByCategory">
                         <option v-for="(item, index) in build.categories" v-bind:value="index"
@@ -20,10 +20,10 @@
                 </div>
                 <template v-if='build.producers != null'>
                     <div class="form-group" data-block="producer">
-                        <label for="producer" class="">Виробник</label>
+                        <h5 for="producer" class="">Виробник</h5>
                         <select class="form-control" id="producer" name="producer"
                                 v-model="formData.idProducer"
-                                @click="getAccessoriesByProducer(), getTypeAccessoriesByCategory()">
+                                @click="getAccessories(formData.category, formData.idProducer)">
                             <option v-for="item in build.producers" v-bind:value="item.id_producer"
                                     v-text="item.producer"></option>
                         </select>
@@ -35,25 +35,36 @@
 
                     <template v-if="build.typeAccessories != null" v-for="typeAccessories in build.typeAccessories">
                         <div class="col-sm-9">
-                            <p class="accessories-name" v-text="typeAccessories.full_name"></p>
+                            <h5 class="accessories-name" v-text="typeAccessories.full_name"></h5>
                         </div>
                         <template v-for="(item, index) in formData.accessories[typeAccessories.id_type_accessories]">
                             <div class="col-sm-8">
-                                <input type="text" class="form-control col-sm-4" maxlength="30"
-                                       placeholder="Назва" v-model="item.name">
+                                <input type="text" class="form-control" maxlength="30"
+                                       placeholder="Назва" v-model="item.name"
+                                       v-on:input="setUpdatedProperty(item.id_type_accessories, index)">
                             </div>
                             <div class="col-sm-2">
-                                <input type="number" class="form-control col-sm-4" min="0" max="10000" step="0.01"
-                                       placeholder="Ціна, грн" v-model="item.price">
+                                <input type="number" class="form-control price" min="0" max="99999" step="0.01"
+                                       placeholder="Ціна, грн" v-bind:value="item.price | toFix"
+                                       v-on:click="setUpdatedProperty(item.id_type_accessories, index)"
+                                       v-on:input="item.price = $event.target.value">
                             </div>
                             <div class="col-sm-2">
                                 <button type="button" class="btn btn-danger" title="Видалити цей параметр"
-                                        @click="removeAccessories(index, item.id_data)">
-                                <span class="glyphicon glyphicon-glyphicon glyphicon-remove"
+                                        @click="removeAccessories(item.id_accessories)"
+                                        v-if="item.id_accessories != null">
+                                <span class="glyphicon glyphicon-remove"
                                       aria-hidden="true"></span>
                                 </button>
-                                <button type="button" class="btn btn-success" title="Додати ще один додатковий параметр"
-                                        @click="addRowAccessories(item.id_type_accessories)">
+                                <button type="button" class="btn btn-primary" title="Обновити цей параметр"
+                                        @click="updateAccessories(item.id_type_accessories, index)"
+                                        v-if="item.updated == true">
+                                <span class="glyphicon glyphicon-ok"
+                                      aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-success" title="Додати параметр"
+                                        @click="addAccessories(item.id_type_accessories, index)"
+                                        v-if="item.id_accessories == null">
                                 <span class="glyphicon glyphicon-plus"
                                       aria-hidden="true"></span>
                                 </button>
@@ -127,6 +138,7 @@
         var addItemFonm = new Vue({
             el: "#accessoriesForm",
             data: {
+                wait: false,
                 formData: {
                     category: null,
                     idProducer: null,
@@ -150,6 +162,8 @@
             },
             methods: {
                 getProducersByCategory: function () {
+                    this.formData.idProducer = null;
+                    this.build.typeAccessories = null;
                     url = '{{ url("/admin/producers") }}' + '/' + this.formData.category;
                     axios({
                         method: 'get',
@@ -162,54 +176,124 @@
                             console.log(error);
                         });
                 },
-                getAccessoriesByProducer: function () {
-                    url = '{{ url("/admin/accessories/producer") }}' + '/' + this.formData.idProducer;
+                getAccessories: function (category, idProducer) {
+                    url = '{{ url("/admin/accessories/get-accessories") }}';
                     axios({
-                        method: 'get',
+                        method: 'post',
                         url: url,
+                        data: {
+                            category: category,
+                            id_producer: idProducer
+                        }
                     })
                         .then(response => {
                             if (response.data.length != 0) {
-                                this.formData.accessories = response.data;
+                                this.formData.accessories = response.data.accessories;
+                                this.build.typeAccessories = response.data.types;
                             }
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
                 },
-                getTypeAccessoriesByCategory: function () {
-                    url = '{{ url("/admin/accessories/type") }}' + '/' + this.formData.category;
+                removeAccessories: function (idAccessories) {
+                    if(this.wait){
+                        return
+                    }
+                    this.wait = true
+                    setTimeout(() => this.wait = false, 1000);
+                    url = '{{ url("/admin/accessories/") }}' + '/' + idAccessories;
                     axios({
-                        method: 'get',
+                        method: 'delete',
                         url: url,
                     })
                         .then(response => {
-                            this.build.typeAccessories = response.data;
-                            var data = response.data
-                            console.log ();
+                            if (response.data.length != 0) {
+                                this.getAccessories(this.formData.category, this.formData.idProducer)
+                                runToastmessage("Комплектуючі успішно видалені з бази даних");
+                            }
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
                 },
-                removeAccessories: function (index, id_data) {
-                    console.log(index + ' ' + id_data);
+                addAccessories: function (idTypeAccessories, index) {
+                    if(this.wait){
+                        return
+                    }
+                    this.wait = true
+                    setTimeout(() => this.wait = false, 1000);
+                    var name = this.formData.accessories[idTypeAccessories][index].name;
+                    var price = this.formData.accessories[idTypeAccessories][index].price || 0;
+                    if (typeof name !== 'undefined' && name.length != 0) {
+                        url = '{{ url("/admin/accessories") }}';
+                        axios({
+                            method: 'post',
+                            url: url,
+                            data: {
+                                id_producer: this.formData.idProducer,
+                                id_type_accessories: idTypeAccessories,
+                                name: name,
+                                price: price
+                            }
+                        })
+                            .then(response => {
+                                if (response.data.length != 0) {
+                                    this.getAccessories(this.formData.category, this.formData.idProducer)
+                                    runToastmessage("Комплектуючі успішно внесені в базу даних");
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    } else {
+                        runToastmessage("Введіть назву комплектуючого", "error");
+                        console.log('Введіть назву комплектуючого')
+                    }
                 },
-                addRowAccessories: function (idTypeAccessories) {
-                    $data = this.getEmptyAccessories(idTypeAccessories)
-                    this.formData.accessories[idTypeAccessories].push($data);
+                setUpdatedProperty: function (idTypeAccessories, index) {
+                    var accessory = this.formData.accessories[idTypeAccessories][index];
+                    if (typeof accessory.id_accessories !== 'undefined') {
+                        accessory.updated = true;
+                    }
                 },
-                getEmptyAccessories: function (idTypeAccessories) {
-                    var emptyAccessories = {
-                        id_accessories: "",
-                        id_producer: this.formData.idProducer,
-                        id_type_accessories: idTypeAccessories,
-                        name: null,
-                        price: null,
-                    };
-                    return emptyAccessories;
+                updateAccessories: function (idTypeAccessories, index) {
+                    var name = this.formData.accessories[idTypeAccessories][index].name;
+                    var price = this.formData.accessories[idTypeAccessories][index].price || 0;
+                    var idAccessories = this.formData.accessories[idTypeAccessories][index].id_accessories;
+                    if (typeof name !== 'undefined' && name.length != 0) {
+                        url = '{{ url("/admin/accessories") }}' + "/" + idAccessories;
+                        axios({
+                            method: 'post',
+                            url: url,
+                            data: {
+                                _method: 'PUT',
+                                price: price,
+                                name: name
+                            }
+                        })
+                            .then(response => {
+                                if (response.data.length != 0) {
+                                    this.getAccessories(this.formData.category, this.formData.idProducer)
+                                    runToastmessage("Зміни успішно внесені в базу даних");
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    } else {
+                        runToastmessage("Введіть назву комплектуючого", "error");
+                    }
                 },
             },
+            filters: {
+                toFix: function (value) {
+                    if (typeof value !== 'undefined') {
+                        value = parseFloat(value);
+                        return value.toFixed(2);
+                    }
+                }
+            }
         })
     </script>
 @endsection

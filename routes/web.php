@@ -23,7 +23,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('product/remove-other-data/{id_data}', 'ProductController@removeOtherData');
     Route::resource('product', 'ProductController');
 
-    Route::get('accessories/type/{category}', 'AccessoriesController@getTypeAccessoriesByCategory');
+    Route::get('accessories/debug', 'AccessoriesController@debug');
+    Route::post('accessories/get-accessories', 'AccessoriesController@getAccessories');
     Route::get('accessories/producer/{id_producer}', 'AccessoriesController@getAccessoriesByProducer');
     Route::resource('accessories', 'AccessoriesController');
 
