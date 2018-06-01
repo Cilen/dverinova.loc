@@ -14,12 +14,12 @@
     <div class="row">
         <div class="col-sm-6">
             <h5>Розмір полотна</h5>
-            <template v-for="(availability, name, index) in itemData.polotno" v-if="availability == 1">
+            <template v-for="(item, name, index) in polotno"  v-if="item == 1">
                 <div>
                     <label>
                         <input type="radio" name="size-door1" v-bind:value="index" v-model="sizeDoor1">
-                        @{{name}}
-                        <span class="addition-price" v-if="price.polotno[index] != 0"> (+@{{ price.polotno[index] }} грн)</span>
+                        @{{ name }}
+                        <span class="addition-price"> (+@{{ itemData.price}} грн)</span>
                     </label>
                 </div>
             </template>
@@ -27,166 +27,123 @@
         <div class="col-sm-6">
             <template v-if="checkedType == 2">
                 <h5>Розмір 2-го полотна</h5>
-                <template v-for="(availability, name, index) in itemData.polotno" v-if="availability == 1">
+                <template v-for="(item, name, index) in polotno" v-if="item == 1">
                     <div>
                         <label>
                             <input type="radio" name="size-door2" v-bind:value="index" v-model="sizeDoor2">
-                            @{{name}}
-                            <span class="addition-price" v-if="price.polotno[index] != 0"> (+@{{ price.polotno[index] }} грн)</span>
+                            @{{ name }}
+                            <span class="addition-price"> (+@{{ itemData.price }} грн)</span>
                         </label>
                     </div>
                 </template>
             </template>
         </div>
     </div>
+
     <div class="row">
+
+    {{--Дверна коробка--}}
         <div class="col-sm-6">
-            <h5>Дверна коробка</h5>
-            <template v-for="(availability, name, index) in itemData.box" v-if="availability == 1">
+            <h5 v-cloak v-if="itemData.accessories.box.data !== undefined">@{{ itemData.accessories.box.full_name }}</h5>
+            <template v-for="(item, name, index) in itemData.accessories.box.data" v-if="itemData.accessories.box.data !== undefined">
                 <div>
                     <label>
-                        <input type="radio" name="box" v-bind:value="index" v-model="box">
-                        @{{ name }}
-                        <span class="addition-price" v-if="price.box[index] != 0"> (+@{{ price.box[index] }} грн)</span>
+                        <input type="radio" name="box" v-bind:value="item" v-model="box">
+                        @{{ item.name }}
+                        <span class="addition-price" v-if="item.price != 0"> (+@{{ item.price }} грн)</span>
                     </label>
                 </div>
             </template>
         </div>
+
+        {{--Поріг--}}
         <div class="col-sm-6">
-            <template v-if="(box != null) && (itemData.doorstep.length != 0)">
-                <h5>Поріг</h5>
-                <template v-for="(availability, name, index) in itemData.doorstep" v-if="availability == 1">
+            <h5 v-cloak v-if="(box != null) && (itemData.accessories.doorstep.data !== undefined)">@{{ itemData.accessories.doorstep.full_name }}</h5>
+            <template v-if="(box != null) && (itemData.accessories.doorstep.data !== undefined)">
+                <template v-for="(item, name, index) in itemData.accessories.doorstep.data">
                     <div>
                         <label>
-                            <input type="radio" name="doorstep" v-bind:value="index" v-model="doorstep">
-                            @{{ name }}
-                            <span class="addition-price" v-if="price.doorstep[index] != 0"> (+@{{ price.doorstep[index] }} грн)</span>
+                            <input type="radio" name="doorstep" v-bind:value="item" v-model="doorstep">
+                            @{{ item.name }}
+                            <span class="addition-price" v-if="item.price != 0"> (+@{{ item.price }} грн)</span>
                         </label>
                     </div>
                 </template>
             </template>
         </div>
+
     </div>
+
     <div class="row">
+
+        {{--Лиштва--}}
         <div class="col-sm-6">
-            <h5>Лиштва</h5>
-            <template v-for="(availability, name, index) in itemData.lishtva" v-if="availability == 1">
+            <h5 v-cloak v-if="itemData.accessories.lishtva.data !== undefined">@{{ itemData.accessories.lishtva.full_name }}</h5>
+            <template v-for="(item, name, index) in itemData.accessories.lishtva.data" v-if="itemData.accessories.lishtva.data !== undefined">
                 <div>
                     <label>
-                        <input type="radio" name="lishtva" v-bind:value="index" v-model="lishtva">
-                        @{{name}}
-                        <span class="addition-price"
-                              v-if="price.lishtva[index] != 0">(+@{{ price.lishtva[index] }} грн)</span>
+                        <input type="radio" name="lishtva" v-bind:value="item" v-model="lishtva">
+                        @{{item.name}}
+                        <span class="addition-price" v-if="item.price != 0">(+@{{ item.price }} грн)</span>
                     </label>
                 </div>
             </template>
         </div>
+
+        {{--Добори--}}
         <div class="col-sm-6">
-            <h5>Добірна дошка</h5>
-            <template v-for="(availability, name, index) in itemData.dobir" v-if="availability == 1">
+            <h5 v-cloak v-if="itemData.accessories.dobir.data !== undefined">@{{ itemData.accessories.dobir.full_name }}</h5>
+            <template v-for="(item, name, index) in itemData.accessories.dobir.data" v-if="itemData.accessories.dobir.data !== undefined">
                 <div>
                     <label>
-                        <input type="radio" name="dobir" v-bind:value="index" v-model="dobir">
-                        @{{name}}
+                        <input type="radio" name="dobir" v-bind:value="item" v-model="dobir">
+                        @{{item.name}}
                         <span class="addition-price"
-                              v-if="price.dobir[index] != 0"> (+@{{ price.dobir[index] }} грн)</span>
+                              v-if="item.price != 0">(@{{ item.price }} грн)</span>
                     </label>
                 </div>
             </template>
         </div>
+
     </div>
+
     <div class="row">
+
+        {{--Притворна планка--}}
         <div class="col-sm-6">
             <template v-if="checkedType == 2">
-                <h5>Притворна планка</h5>
-                <template v-for="(availability, name, index) in itemData.planka" v-if="availability == 1">
+                <h5 v-if="itemData.accessories.planka.data !== undefined">@{{ itemData.accessories.planka.full_name }}</h5>
+                <template v-for="(item, name, index) in itemData.accessories.planka.data" v-if="itemData.accessories.planka.data !== undefined">
                     <div>
                         <label>
-                            <input type="radio" name="planka" v-bind:value="index" v-model="planka">
-                            @{{name}}
-                            <span class="addition-price" v-if="price.planka[index] != 0"> (+@{{ price.planka[index] }} грн)</span>
+                            <input type="radio" name="planka" v-bind:value="item" v-model="planka">
+                            @{{item.name}}
+                            <span class="addition-price" v-if="item.price != 0"> (+@{{ item.price }} грн)</span>
                         </label>
                     </div>
                 </template>
             </template>
         </div>
+
     </div>
 
 </div>
 
 
-<ul>
-
-    @if($data['producer'])
-        <li>
-            <b>Виробник: </b> "{{$data['producer']}}"
-        </li>
-    @endif
-    <li>
-        <b>Висота: </b> 200 см
-    </li>
-    @if($data['description'])
-        <li>
-            {{$data['description']}}
-        </li>
-    @endif
-</ul>
-
 @section('item-scripts')
     <script>
-        var itemData = {
-            polotno: {
-                "60 x 200": 1,
-                "70 x 200": 1,
-                "80 x 200": 1,
-                "90 x 200": 1
-            },
-            dobir: {
-                "Без добірної дошки": 1,
-                "Добірна дошка 10 см": 1,
-                "Добірна дошка 15 см": 1,
-                "Добірна дошка 20 см": 0
-            },
-            box: {
-                'Без дверної коробки': 1,
-                'Деревяна 80 мм': 1,
-                'Деревяна 100 мм': 1
-            },
-            lishtva: {
-                'Без лиштви': 1,
-                'На одну сторону': 1,
-                'На дві сторони': 1
-            },
-            planka: {
-                "Без притворної планки": 1,
-                "Притворною планка": 1
-            },
-            doorstep: {
-                "Без порога": 1,
-                "З порогом": 1
-            },
-            priceSingle: {
-                polotno: [4580, 4580, 4580, 5580],
-                dobir: [0, 137, 267, 0],
-                box: [0, 307, 405],
-                lishtva: [0, 265, 530],
-                planka: [0, 74],
-                doorstep: [0, 153]
-            },
-            priceDouble: {
-                polotno: [4580, 4580, 4580, 5580],
-                dobir: [0, 237, 367, 0],
-                box: [0, 307, 405],
-                lishtva: [0, 265, 530],
-                planka: [0, 74],
-                doorstep: [0, 153]
-            },
-        }
+
         var itemForm = new Vue({
             el: '#internal-door-form',
             store,
             data: {
                 itemData: itemData,
+                polotno: {
+                    "60 x 200": itemData.size_60,
+                    "70 x 200": itemData.size_70,
+                    "80 x 200": itemData.size_80,
+                    "90 x 200": itemData.size_90
+                },
                 checkedType: 1,
                 box: 0,
                 doorstep: 0,
@@ -199,26 +156,25 @@
             computed: {
                 pohonazhPrice: function () {
                     if (this.checkedType == 1) {
-                        return (this.price.box[this.box]
-                            + this.price.doorstep[this.doorstep]
-                            + this.price.dobir[this.dobir]
-                            + this.price.lishtva[this.lishtva]);
+                        return ((this.box.price || 0)
+                                + (this.doorstep.price || 0)
+                                + (this.dobir.price || 0)
+                                + (this.lishtva.price|| 0))
                     } else if (this.checkedType == 2) {
-                        return (this.price.box[this.box]
-                            + this.price.doorstep[this.doorstep]
-                            + this.price.dobir[this.dobir]
-                            + this.price.lishtva[this.lishtva]
-                            + this.price.planka[this.planka]);
+                        return ((this.box.price || 0)
+                            + (this.doorstep.price || 0)
+                            + (this.dobir.price || 0)
+                            + (this.lishtva.price || 0)
+                            + (this.planka.price || 0));
                     } else {
                         return (0);
                     }
                 },
                 polotnoPrice: function () {
                     if (this.checkedType == 1) {
-                        return (this.price.polotno[this.sizeDoor1]);
+                        return (this.itemData.price);
                     } else if (this.checkedType == 2) {
-                        return (this.price.polotno[this.sizeDoor1]
-                            + this.price.polotno[this.sizeDoor2]);
+                        return (this.itemData.price * 2);
                     } else {
                         return (0);
                     }
@@ -226,13 +182,6 @@
                 totalPrice: function () {
                     return (this.polotnoPrice + this.pohonazhPrice)
                 },
-                price: function () {
-                    if (this.checkedType == 1) {
-                        return this.itemData.priceSingle;
-                    } else {
-                        return this.itemData.priceDouble;
-                    }
-                }
             },
             created:function(){
                 this.loadPricesToStore();

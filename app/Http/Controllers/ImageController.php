@@ -17,13 +17,13 @@ class ImageController extends Controller
         $file = $request->file('qqfile');
         $kof = Image::make($file)->width()/Image::make($file)->height();
         if ($kof > 0.8){
-            Image::make($file)->widen(80)->encode('jpg', 75)->save('storage/images/small/' . $uuid . '.jpg');
-            Image::make($file)->widen(240)->encode('jpg', 75)->save('storage/images/medium/' . $uuid . '.jpg');
-            Image::make($file)->widen(600)->encode('jpg', 75)->save('storage/images/large/' . $uuid . '.jpg');
+            Image::make($file)->widen(60)->encode('jpg', 75)->save('storage/images/small/' . $uuid . '.jpg');
+            Image::make($file)->widen(180)->encode('jpg', 75)->save('storage/images/medium/' . $uuid . '.jpg');
+            Image::make($file)->widen(450)->encode('jpg', 75)->save('storage/images/large/' . $uuid . '.jpg');
         } elseif ($kof <= 0.8) {
-            Image::make($file)->heighten(100)->encode('jpg', 75)->save('storage/images/small/' . $uuid . '.jpg');
-            Image::make($file)->heighten(300)->encode('jpg', 75)->save('storage/images/medium/' . $uuid . '.jpg');
-            Image::make($file)->heighten(750)->encode('jpg', 75)->save('storage/images/large/' . $uuid . '.jpg');
+            Image::make($file)->heighten(75)->encode('jpg', 75)->save('storage/images/small/' . $uuid . '.jpg');
+            Image::make($file)->heighten(225)->encode('jpg', 75)->save('storage/images/medium/' . $uuid . '.jpg');
+            Image::make($file)->heighten(560)->encode('jpg', 75)->save('storage/images/large/' . $uuid . '.jpg');
         } else {
             return response()->json([
                 'success' => false,

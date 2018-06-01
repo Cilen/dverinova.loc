@@ -43,6 +43,74 @@
                             <div class="col-lg-6 col-sm-6 col-xs-8">
                                 <div class="item-info">
                                     @include('layouts/'.$data['category'])
+
+                                    <h4>Характеристики:</h4>
+                                    <table class="table table-striped">
+                                        @if(isset($data['producer']))
+                                            <tr>
+                                                <td><b>Виробник:</b></td>
+                                                <td>{{$data['producer']}}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if(isset($data['height']))
+                                            <tr>
+                                                <td><b>Висота, мм:</b></td>
+                                                <td>{{$data['height']}}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if(isset($data['length']))
+                                            <tr>
+                                                <td><b>Довжина, мм:</b></td>
+                                                <td>{{$data['length']}}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if(isset($data['width']))
+                                            <tr>
+                                                <td><b>Ширина, мм:</b></td>
+                                                <td>{{$data['width']}}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if(isset($data['total_area']))
+                                            <tr>
+                                                <td><b>Площа в упаковці, м.кв.:</b></td>
+                                                <td>{{$data['total_area']}}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if(isset($data['thickness']))
+                                            <tr>
+                                                <td><b>Товщина, мм:</b></td>
+                                                <td>{{$data['thickness']}}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if(isset($data['number_in_package']))
+                                            <tr>
+                                                <td><b>Кількість в упаковці:</b></td>
+                                                <td>{{$data['number_in_package']}}</td>
+                                            </tr>
+                                        @endif
+
+                                        @if (isset($data['otherData']))
+                                            @foreach($data['otherData'] as $item)
+                                                    <tr>
+                                                        <td><b>{{ $item['name'] }}:</b></td>
+                                                        <td>{{ $item['value'] }}</td>
+                                                    </tr>
+                                            @endforeach
+                                        @endif
+                                    </table>
+
+                                    <h4>Опис:</h4>
+                                    @if($data['description'])
+                                        @foreach($data['description'] as $out)
+                                        <p>{{$out}}</p>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-lg-3 col-sm-3 col-xs-4">
@@ -76,9 +144,12 @@
 
 @endsection
 @section('scripts')
-    @yield('item-scripts')
     <script>
 
+    var itemData =  {!! json_encode($data) !!}
+    </script>
+    @yield('item-scripts')
+    <script>
         $(document).ready(function(){
             $('.slider-for').slick({
                 slidesToShow: 1,
@@ -97,7 +168,6 @@
                 focusOnSelect: true,
             });
         });
-
         var totalInfo = new Vue({
             el: '#total-info',
             store,

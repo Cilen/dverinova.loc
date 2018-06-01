@@ -293,7 +293,7 @@
 @endsection
 @section('scripts')
     <script>
-        var incomingData = JSON.parse('{!! json_encode($data) !!}');
+        var incomingData = {!! json_encode($data) !!};
 
 
         var addItemForm = new Vue({
@@ -343,10 +343,24 @@
                         });
                 },
                 addOtherData: function () {
+                    //Затримка часу на повторний запит
+                    if(this.wait){
+                        return
+                    }
+                    this.wait = true
+                    setTimeout(() => this.wait = false, 1000);
+
                     this.formData.otherData.push({name: '', value: ''});
                     this.formData.numberOtherData += 1;
                 },
                 removeOtherData: function (index, id_data) {
+                    //Затримка часу на повторний запит
+                    if(this.wait){
+                        return
+                    }
+                    this.wait = true
+                    setTimeout(() => this.wait = false, 1000);
+
                     if (id_data){
                         url = '{{ url("/admin/product/remove-other-data") }}' + '/' + id_data;
                         axios({
@@ -354,7 +368,7 @@
                             url: url,
                         })
                             .then(response => {
-                                runToastmessage('Виробник успішно видалений з бази даних');
+                                runToastmessage('Параметр успішно видалений з бази даних');
                             })
                             .catch(function (error) {
                                 return (console.log(error));

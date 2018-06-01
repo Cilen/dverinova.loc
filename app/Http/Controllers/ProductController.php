@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\InternalDoor;
 use App\OtherData;
+use App\Producer;
 use App\Product;
 use App\ProdImage;
+use App\TypesAccessories;
 use Illuminate\Http\Request;
+use function MongoDB\BSON\toJSON;
 
 class ProductController extends Controller
 {
@@ -77,7 +81,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = Product::create([
-            'name' => $request->input('name'),
+            'name' => e($request->input('name')),
             'category' => $request->input('category'),
             'availability' => $request->input('availability'),
             'price' => $request->input('price'),
@@ -142,14 +146,34 @@ class ProductController extends Controller
     //Сторінка конкретного продукту
     public function getItem(Request $request)
     {
+        $accessories = array();
         $idProduct = $request->route('idProduct');
         $category = $request->route('category');
-        $type = $request->route('type');
         $product = Product::find($idProduct);
         $model = $product->$category()->first()->toArray();
-        $producer = $product->producer()->first()->toArray();
-        $product = $product->toArray();
-        $data = array_replace($this->data, $product, $model, $producer);
+        $producer = $product->producer()->select('id_producer','producer')->first();
+        $otherData = array();
+        $otherData = $product -> otherData()->select('id_data','name', 'value')->get()->toArray();
+        $typesAccessories = TypesAccessories::where('category', $category)->select('id_type_accessories','name', 'full_name')->get()->toArray();
+        $accessoriesList = $producer->accessories()->select('id_accessories', 'id_type_accessories','name', 'price')->get()->groupBy('id_type_accessories')->toArray();
+        $accessories = array();
+        if (isset($accessoriesList)) {
+            foreach ($typesAccessories as $type){
+                $accessories[$type['name']] = $type;
+                if(isset($accessoriesList[$type['id_type_accessories']])) {
+                    $accessories[$type['name']]['data'] = $accessoriesList[$type['id_type_accessories']];
+                }
+            };
+        }else{
+            $accessories = array();
+        }
+        $data = array_merge(
+            $product->toArray(),
+            $model, $producer->toArray(),
+            ["accessories" => $accessories],
+            ["otherData" => $otherData]
+        );
+        $data['description'] = explode("\r\n", $data['description']);
         $images = ProdImage::where('id_product', $idProduct)->get()->toArray();
         return view('item')->with(['data' => $data, 'images' => $images]);
     }
@@ -163,10 +187,12 @@ class ProductController extends Controller
         $otherData = $product -> otherData()->select('id_data','name', 'value')->get()->toArray();
         $product = $product->toArray();
         $otherData = array('otherData' => $otherData);
-        $data = array_replace($this->data, $product, $model, $producer, $otherData);
+        $data = array_merge($product, $model, $producer, $otherData);
         $data['title'] = 'Редагувати товар';
         $data['update'] = true;
+        $data['otherData'][] = array("name" => "", "value" => "");
         $data['numberOtherData'] = count($data['otherData']);
+//        dd($data);
         return view('admin.add-product')->with("data", $data);
     }
     //Виконати редагування даних за допомогою форми редагування даних
@@ -239,8 +265,6 @@ class ProductController extends Controller
                 ]);
             } elseif (empty($name) && !empty($id_data)) {
                 $this->removeOtherData($id_data);
-            } else {
-                return 'Error: Unknown otherData';
             };
         }
         return redirect()->action('ProductController@edit', ['id' => $id]);
