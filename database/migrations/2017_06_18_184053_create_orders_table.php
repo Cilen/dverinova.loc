@@ -17,8 +17,11 @@ class CreateOrdersTable extends Migration
             $table->increments('id_order');
             $table->integer('id_product');
             $table->string('user_name');
-            $table->bigInteger('phone');
+            $table->text('phone');
             $table->boolean('viewed');
+            $table->text('accessories')->nullable();
+            $table->text('parameters')->nullable();
+            $table->integer('total_price');
             $table->timestamps();
         });
     }

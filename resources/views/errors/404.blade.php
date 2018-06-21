@@ -1,0 +1,1 @@
+Помилка 404. Файл /resources/views/errors/404.blade.php

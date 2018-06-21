@@ -26,8 +26,6 @@ class ProductController extends Controller
         "availability" => "1",
         "id_producer" => "",
         "price" => "0",
-        "discount" => "0",
-        "total_price" => "0",
         "description" => "",
         "type" => "",
         "size_60" => 0,
@@ -48,14 +46,18 @@ class ProductController extends Controller
     //Перегляд всіх товарів в Адмін-таблиці
     public function index()
     {
-        $data = Product::all();
+        $data = Product::with('producer')->get();
+        foreach ($data as $row){
+            $row->category_loc = trans("localization.".$row->category);
+            $row->producer_name = $row->producer->producer;
+        };
+//        dd($data);
         return view('admin.show-products')->with('data', $data);
     }
     // Головна сторінка сайту
     public function main(){
         $top = Product::where('top', '1')->get()->toArray();
-        $discount = Product::where('discount', '>', '0')->get()->toArray();
-        return view('main')->with(['top' => $top, 'discount' => $discount]);
+        return view('main')->with(['top' => $top]);
     }
     //Отримати товари конкретної категорії
     public function getCategory($category, $type = null){
@@ -85,8 +87,6 @@ class ProductController extends Controller
             'category' => $request->input('category'),
             'availability' => $request->input('availability'),
             'price' => $request->input('price'),
-            'discount' => $request->input('discount'),
-            'total_price' => ($request->input('price') * (100 - $request->input('discount') ) / 100 ),
             'description' => $request->input('description'),
             'id_producer' => $request->input('id_producer'),
             'top' => 0
@@ -181,6 +181,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
+        if ($product == null) return abort(404);
         $category = $product->category;
         $model = $product->$category()->first()->toArray();
         $producer = $product -> producer()->first()->toArray();
@@ -204,8 +205,6 @@ class ProductController extends Controller
             'category' => $request->input('category'),
             'availability' => $request->input('availability'),
             'price' => $request->input('price'),
-            'discount' => $request->input('discount'),
-            'total_price' => ($request->input('price') * (100 - $request->input('discount') ) / 100 ),
             'description' => $request->input('description'),
             'id_producer' => $request->input('id_producer'),
         ]);

@@ -195,15 +195,6 @@
                         </div>
                     </template>
                     <template v-if="formData.category != ''">
-                        <div class="form-group" data-block="discount">
-                            <label for="discount" class="col-sm-4 text-right">Знижка, %</label>
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" v-model="formData.discount" min="0" max="100"
-                                       value="0" name="discount" id="discount">
-                            </div>
-                        </div>
-                    </template>
-                    <template v-if="formData.category != ''">
                         <input type="hidden" name="numberOtherData" v-model="formData.numberOtherData">
                     </template>
                     <template v-if="formData.category != ''" v-for="(item, index) in formData.otherData">

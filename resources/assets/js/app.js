@@ -24,28 +24,28 @@ function runToastmessage(text, type) {
 //     return false;
 // });
 
-$("#buyProduct").submit(function(e) {
-
-    $('.bayModal').modal('hide');
-    var url = "/neworder"; // the script where you handle the form input.
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: $("#buyProduct").serialize(), // serializes the form's elements.
-        success: function(data)
-        {
-            $('.baySuccess').modal('show');
-            console.log(data);
-        },
-        error: function(data)
-        {
-            $('.bayError').modal('show');
-            console.log(data)
-        }
-    });
-    e.preventDefault(); // avoid to execute the actual submit of the form.
-
-});
+// $("#buyProduct").submit(function(e) {
+//
+//     $('.bayModal').modal('hide');
+//     var url = "/neworder"; // the script where you handle the form input.
+//     $.ajax({
+//         type: "POST",
+//         url: url,
+//         data: $("#buyProduct").serialize(), // serializes the form's elements.
+//         success: function(data)
+//         {
+//             $('.baySuccess').modal('show');
+//             console.log(data);
+//         },
+//         error: function(data)
+//         {
+//             $('.bayError').modal('show');
+//             console.log(data)
+//         }
+//     });
+//     e.preventDefault(); // avoid to execute the actual submit of the form.
+//
+// });
 
 $("#feedback").submit(function(e) {
 
@@ -74,17 +74,31 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        prices: [0,0,0]
+        prices: [0,0,0],
+        accessories: [],
+        parameters: []
     },
     actions: {},
     mutations: {
         savePrices(state, prices){
             state.prices = prices
         },
+        saveAccessories(state, accessories){
+            state.accessories = accessories
+        },
+        saveParameters(state, parameters){
+            state.parameters = parameters
+        }
     },
     getters: {
         getPrices(state, getters){
             return state.prices;
+        },
+        getAccessories(state, getters){
+            return state.accessories;
+        },
+        getParameters(state, getters){
+            return state.parameters;
         }
     },
     modules: {}

@@ -14,9 +14,7 @@ class CreateProductsTable extends Migration
             $table->string('category', 20);
             $table->boolean('availability'); //Наявність
             $table->boolean('top'); //Хіт продаж
-            $table->float('price')->default(0);
-            $table->integer('discount')->nullable();
-            $table->float('total_price')->nullable();
+            $table->integer('price')->default(0);
             $table->text('description')->nullable(); //Опис
             $table->integer('id_producer')->nullable()
                 ->references('id_producer')->on('producers')

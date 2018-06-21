@@ -1,6 +1,9 @@
 
 // Bootstrap
 @import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+//Tabulator
+@import "vendor/tabulator/themes/tabulator_bootstrap";
+@import "vendor/tabulator/tabulator";
 // Variables
 @import "variables";
 @import "vendor/menu/component";
@@ -10,8 +13,6 @@
 @import "vendor/slick";
 @import "vendor/lightbox";
 @import "vendor/slick-theme";
-@import "vendor/tabulator/tabulator";
-@import "vendor/tabulator/themes/tabulator_modern";
 @import "typography";
 @import "elements/buttons";
 @import "admin";

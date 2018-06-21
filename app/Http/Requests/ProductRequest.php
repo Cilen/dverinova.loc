@@ -29,8 +29,7 @@ class ProductRequest extends FormRequest
             'name' => 'required|max:100',
             'availability' => 'boolean',
             'id_producer' => 'integer|nullable',
-            'price' => 'numeric|nullable|min:0|max:999999',
-            'discount' => 'integer|nullable|between:0,100',
+            'price' => 'integer|nullable|min:0|max:999999',
             'top' => 'boolean',
             'description' => 'max:2000',
             //Міжкімнатні двері

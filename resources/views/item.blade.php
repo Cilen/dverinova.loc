@@ -122,11 +122,17 @@
                                     @endif
                                     <div class="item-id">Код: {{str_pad($data['id_product'], 4, "0", STR_PAD_LEFT)}}</div>
                                     @if ($data['category'] == 'internalDoor')
-                                        <div class="item-price-detail">Ціна за полотно: <span v-cloak>@{{polotnoPrice}}</span> грн</div>
-                                        <div class="item-price-detail">Погонаж: <span v-cloak>@{{pohonazhPrice}}</span> грн</div>
-                                        <div class="item-price-detail">Ціна комплекту: <span class="item-price-total" v-cloak>@{{totalPrice}}</span> грн</div>
+                                        <div class="item-price-detail">Ціна за полотно: <span v-cloak>@{{prices.itemPrice}}</span> грн</div>
+                                        <div class="item-price-detail">Погонаж: <span v-cloak>@{{prices.accessoriesPrice}}</span> грн</div>
+                                        <div class="item-price-detail">Ціна комплекту: <span class="item-price-total" v-cloak>@{{prices.totalPrice}}</span> грн</div>
+                                    @elseif ($data['category'] == 'externalDoor')
+                                            <div class="item-price-detail">Ціна дверей: <span v-cloak>@{{prices.itemPrice}}</span> грн</div>
+                                            <div class="item-price-detail">Комплектуючі: <span v-cloak>@{{prices.accessoriesPrice}}</span> грн</div>
+                                            <div class="item-price-detail">Ціна комплекту: <span class="item-price-total" v-cloak>@{{prices.totalPrice}}</span> грн</div>
+                                    @elseif ($data['category'] == 'tile' || $data['category'] == 'laminate')
+                                            <div class="item-price-detail">Ціна: <span class="item-price-total" v-cloak>@{{prices.totalPrice}}</span> грн/кв.м.</div>
                                     @else
-                                        <div class="item-price-detail">{{$data['price']}} грн</div>
+                                            <div class="item-price-detail">Ціна: <span class="item-price-total" v-cloak>@{{prices.totalPrice}}</span> грн</div>
                                     @endif
 
                                     <a href="#" class="btn btn-success btn-block btn-lg active" role="button" data-toggle="modal" data-target=".bayModal">Купити</a>
@@ -145,8 +151,7 @@
 @endsection
 @section('scripts')
     <script>
-
-    var itemData =  {!! json_encode($data) !!}
+    var itemData = {!! json_encode($data) !!}
     </script>
     @yield('item-scripts')
     <script>
@@ -177,19 +182,63 @@
                 prices() {
                     return this.$store.getters.getPrices;
                 },
-                polotnoPrice(){
-                    return this.prices[0];
-
-                },
-                pohonazhPrice(){
-                    return this.prices[1];
-                },
-                totalPrice(){
-                    return this.prices[2];
-                },
+            },
+            created: function(){
+                if (this.prices.totalPrice == undefined) this.prices.totalPrice = itemData.price;
+                if (this.prices.itemPrice == undefined) this.prices.itemPrice = 0;
+                if (this.prices.accessoriesPrice == undefined) this.prices.accessoriesPrice = 0;
             },
             methods: {
+            }
+        });
 
+        var bayModal = new Vue({
+            el: '#bay-modal',
+            store,
+            data: {
+                userName: "",
+                phone: ""
+            },
+            computed: {
+                accessories() {
+                    return this.$store.getters.getAccessories;
+                },
+                parameters() {
+                    return this.$store.getters.getParameters;
+                },
+                prices() {
+                    return this.$store.getters.getPrices;
+                },
+            },
+            created: function(){
+                if (this.prices.totalPrice == undefined) this.prices.totalPrice = itemData.price;
+            },
+            methods: {
+                bayProduct: function () {
+                    $('.bayModal').modal('hide');
+                    url = "{{ url("/neworder") }}";
+                    axios({
+                        method: 'post',
+                        url: url,
+                        data: {
+                            userName: this.userName,
+                            phone: this.phone,
+                            idProduct: "{!! $data['id_product'] !!}",
+                            category: "{!! $data['category'] !!}",
+                            accessories: JSON.stringify(this.accessories),
+                            parameters: JSON.stringify(this.parameters),
+                            totalPrice: this.prices.totalPrice
+                        }
+                    })
+                        .then(response => {
+                            $('.baySuccess').modal('show');
+                            console.log(response.data)
+                        })
+                        .catch(function (error) {
+                            $('.bayError').modal('show');
+                            console.log(error);
+                        });
+                },
             }
         });
 

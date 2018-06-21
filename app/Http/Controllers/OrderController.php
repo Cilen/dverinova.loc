@@ -6,6 +6,7 @@ use App\Helpers\SendMail;
 use App\Http\Requests\OrderUpdateRequest;
 use App\Http\Requests\OrderRequest;
 use App\Order;
+use App\TypesAccessories;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,7 +15,21 @@ class OrderController extends Controller
     public function index()
     {
         $data = Order::where('viewed', '0')->with('product')->orderBy('id_order', 'asc')->get();
+
         return view('admin.orders')->with('data', $data);
+    }
+    //Переглянути детально конкретне замовлення
+    public function show($idOrder){
+        $data = Order::find($idOrder);
+        $data['product'] = $data->product()->first();
+        $data['accessories'] = json_decode($data['accessories']);
+        foreach ($data['accessories'] as $accessory){
+            if (isset($accessory->id_type_accessories)){
+                $accessory->type_accessories = TypesAccessories::where('id_type_accessories', $accessory->id_type_accessories)->value('full_name');
+            }
+        }
+        $data->category_loc = trans("localization.".$data->product->category);
+        return view('admin.order-details')->with("data", $data) ;
     }
 
     //Переглянути старі замовлення в Адмін-таблиці
@@ -42,15 +57,21 @@ class OrderController extends Controller
     {
         $idProduct = $request->input('idProduct');
         $userName = $request->input('userName');
-        $phone = $request->input('phone');
+        $phone = str_replace_first("+380", "0", $request->input('phone')) ;
         $category = $request->input('category');
+        $accessories = $request->input('accessories');
+        $parameters = $request->input('parameters');
+        $totalPrice = intval($request->input('totalPrice'));
         $order = Order::create([
             'id_product' => $idProduct,
             'user_name' => $userName,
             'phone' => $phone,
-            'viewed' => 0
+            'viewed' => 0,
+            'accessories' => $accessories,
+            'parameters' => $parameters,
+            'total_price' => $totalPrice
         ]);
-        $mail->orderMail($userName, $phone, $idProduct, $category);
+        $mail->orderMail($userName, $phone, $idProduct, $category, $totalPrice);
         return "Success";
     }
 

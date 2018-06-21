@@ -26,7 +26,7 @@ class OrderRequest extends FormRequest
         return [
             'idProduct' => 'integer',
             'userName' => 'required|max:50',
-            'phone' => 'required|numeric'
+            'phone' => 'required|numeric',
         ];
     }
 }

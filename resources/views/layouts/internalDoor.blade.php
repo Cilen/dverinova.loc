@@ -17,7 +17,7 @@
             <template v-for="(item, name, index) in polotno"  v-if="item == 1">
                 <div>
                     <label>
-                        <input type="radio" name="size-door1" v-bind:value="index" v-model="sizeDoor1">
+                        <input type="radio" name="size-door1"  v-on:change="sizeDoor1Name = name" v-bind:value="index" v-model="sizeDoor1">
                         @{{ name }}
                         <span class="addition-price"> (+@{{ itemData.price}} грн)</span>
                     </label>
@@ -30,7 +30,7 @@
                 <template v-for="(item, name, index) in polotno" v-if="item == 1">
                     <div>
                         <label>
-                            <input type="radio" name="size-door2" v-bind:value="index" v-model="sizeDoor2">
+                            <input type="radio" name="size-door2" v-on:change="sizeDoor2Name = name" v-bind:value="index" v-model="sizeDoor2">
                             @{{ name }}
                             <span class="addition-price"> (+@{{ itemData.price }} грн)</span>
                         </label>
@@ -151,10 +151,12 @@
                 lishtva: 0,
                 planka: 0,
                 sizeDoor1: 0,
+                sizeDoor1Name: null,
                 sizeDoor2: 0,
+                sizeDoor2Name: null
             },
             computed: {
-                pohonazhPrice: function () {
+                accessoriesPrice: function () {
                     if (this.checkedType == 1) {
                         return ((this.box.price || 0)
                                 + (this.doorstep.price || 0)
@@ -180,20 +182,47 @@
                     }
                 },
                 totalPrice: function () {
-                    return (this.polotnoPrice + this.pohonazhPrice)
+                    return (this.polotnoPrice + this.accessoriesPrice)
                 },
             },
             created:function(){
                 this.loadPricesToStore();
+                this.loadAccessoriesToStore();
+                this.loadParametersToStore()
             },
             watch: {
                 totalPrice:function () {
-                    this.loadPricesToStore()
+                    this.loadPricesToStore();
+                    this.loadAccessoriesToStore();
                 },
+                checkedType: 'loadParametersToStore',
+                sizeDoor1: 'loadParametersToStore',
+                sizeDoor2: 'loadParametersToStore',
             },
             methods: {
                 loadPricesToStore(){
-                    store.commit('savePrices', [this.polotnoPrice, this.pohonazhPrice, this.totalPrice])
+                    store.commit('savePrices', {
+                        itemPrice: this.polotnoPrice,
+                        accessoriesPrice: this.accessoriesPrice,
+                        totalPrice: this.totalPrice
+                    })
+                },
+                loadAccessoriesToStore(){
+                    store.commit('saveAccessories', {
+                        box: this.box,
+                        doorstep: this.doorstep,
+                        dobir: this.dobir,
+                        lishtva: this.lishtva,
+                        planka: this.planka})
+                },
+                loadParametersToStore(){
+                    store.commit('saveParameters', {
+                        checkedType: this.checkedType,
+                        sizeDoor1: this.sizeDoor1,
+                        sizeDoor2: this.sizeDoor2,
+                        sizeDoor1Name: this.sizeDoor1Name,
+                        sizeDoor2Name: this.sizeDoor2Name,
+                    })
                 }
             },
         })

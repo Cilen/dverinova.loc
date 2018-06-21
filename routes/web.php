@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('producers', 'ProducerController');
 
     Route::get('orders', 'OrderController@index');
+    Route::get('orders/{idOrder}', 'OrderController@show');
     Route::patch('orders/{idOrder}', 'OrderController@update');
     Route::get('oldOrders', 'OrderController@oldOrders');
 
