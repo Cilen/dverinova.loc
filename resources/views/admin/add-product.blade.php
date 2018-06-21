@@ -189,7 +189,7 @@
                         <div class="form-group" data-block="price">
                             <label for="price" class="col-sm-4 text-right">Ціна, грн</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" v-model="formData.price" min="0" step="0.01"
+                                <input type="number" class="form-control"  v-model="formData.price" v-on:input="toInt" min="0"
                                        name="price" id="price">
                             </div>
                         </div>
@@ -320,6 +320,9 @@
                 }
             },
             methods: {
+                toInt(){
+                    this.formData.price = parseInt(this.formData.price, 10);
+                },
                 getProducersFromCategory: function () {
                     url = '{{ url("/admin/producers") }}' + '/' + this.formData.category;
                     axios({
