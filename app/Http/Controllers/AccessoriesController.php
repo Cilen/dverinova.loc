@@ -16,8 +16,8 @@ class AccessoriesController extends Controller
      */
     public function index()
     {
-
-        return view('admin.accessories');
+        $page['title'] = "Комплектуючі";
+        return view('admin.accessories')->with("page", $page);
     }
 
     /**

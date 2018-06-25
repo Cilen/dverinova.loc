@@ -3,9 +3,6 @@
 @section('content')
     <div class="container" id="order-form">
         <div class="row">
-            <h2>Замовлення №{{$data['id_order']}}</h2>
-            <hr>
-
             <div class="col-sm-2">
                 <a href="{{action('OrderController@index')}}" class="btn btn-warning"
                    title="Повернутись до таблиці замовлень">

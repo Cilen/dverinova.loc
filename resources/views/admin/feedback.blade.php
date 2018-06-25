@@ -18,35 +18,31 @@
     <script>
 
         $("#product-table").tabulator({
-            fitColumns: true, //example option (sets column widths to fill table)
+            layout:"fitColumns",
             columns: [ //set column definitions for imported table data
                 {title: "№", field: "id_feedback", sorter: "number", align: "right", width: "60"},
                 {title: "Ім'я", field: "user_name", sorter: "string", align: "left", width: "340"},
                 {title: "Номер телефону", field: "phone", align: "left", width: "340"},
-                {title: "Час запиту", field: "created_at", sorter: "string", align: "left", formatter:"textarea", editable: true, width: "280"},
-                {title: "Переглянуто",field: "viewed", sorter: "boolean",align: "center",formatter: "tick", editable: true, width: "120"},
+                {title: "Час запиту", field: "created_at", sorter: "string", align: "left", formatter:"textarea", width: "280"},
+                {title: "Переглянуто",field: "viewed", sorter: "boolean",align: "center",formatter: "tickCross", editor:true, width: "148"},
 
             ],
             index: "id_feedback",
-            cellEdited: function (id, data, value, oldVal, rowData, cell, row) {
+            cellEdited: function (data) {
+                data = data.getData()
                 var send = {
-                    "id_feedback": rowData.id_feedback,
+                    "id_feedback": data.id_feedback,
                     "_method": "PATCH",
-                    "viewed": rowData.viewed == true ? 1: 0,
+                    "viewed": data.viewed == true ? 1: 0,
                 };
-                var sendURL = "feedback/"+rowData.id_feedback;
+                var sendURL = "feedback/"+data.id_feedback;
                 $.ajax({
                     type: "POST",
                     url: sendURL,
                     data: send,
                     async: true,
                     success: function (data) {
-                        $().toastmessage('showToast', {
-                            text     : 'Зміни успішно внесені в базу даних',
-                            sticky   : true,
-                            position : 'top-right',
-                            type     : 'success',
-                        });
+                        runToastmessage('Зміни успішно внесені в базу даних');
                         var rowData = JSON.parse(data);
                         var row = rowData.id_feedback;
                         $("#product-table").tabulator("updateRow", row, data);
@@ -54,22 +50,8 @@
                     error: function (xhr, textStatus, errorThrown) {
                         var resp = $.parseJSON(xhr.responseText);
                         $.each(resp,function(index,value){
-                            $().toastmessage('showToast', {
-                                text     : value,
-                                inEffectDuration:  600,
-                                stayTime:         3000,
-                                sticky   : true,
-                                position : 'top-right',
-                                type     : 'error',
-                            });
+                            runToastmessage("При зверненні до бази даних, виникла помилка", "error");
                         });
-                        var oldRowData = {
-                            "id_feedback": rowData.id_feedback,
-                            "viewed": rowData.viewed,
-                        };
-                        oldRowData[data] = oldVal;
-                        $("#product-table").tabulator("updateRow", oldRowData.id_feedback, oldRowData);
-
                     },
                 });
             },

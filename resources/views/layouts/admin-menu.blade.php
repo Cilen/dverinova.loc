@@ -2,15 +2,7 @@
 <nav class="pushy pushy-left">
     <div class="pushy-content">
         <ul>
-            <!-- Submenu -->
             <li class="pushy-link"><a href="{{route('main')}}">Home</a></li>
-            {{--<li class="pushy-submenu">--}}
-                {{--<button>Статті</button>--}}
-                {{--<ul>--}}
-                    {{--<li class="pushy-link"><a href="#">Огляд</a></li>--}}
-                    {{--<li class="pushy-link"><a href="#">Створити статтю</a></li>--}}
-                {{--</ul>--}}
-            {{--</li>--}}
             <li class="pushy-submenu">
                 <button>Товари</button>
                 <ul>
@@ -50,7 +42,9 @@
 <div class="admin-title-panel">
     <div class="container">
         <div class="row ">
-            <span class="admin-title center-block">Панель керування</span>
+            <span class="admin-title center-block">
+                {{(isset($page['title']) ? $page['title'] : "Панель керування")}}
+            </span>
         </div>
     </div>
 

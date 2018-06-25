@@ -9583,13 +9583,16 @@ body.lb-disable-scrolling {
   height: 39px; }
 
 .admin-title-panel {
+  text-align: center;
   background-color: #1a1a1a;
-  color: #2c91ed;
-  height: 39px; }
+  color: #FFF;
+  height: 39px;
+  margin-bottom: 15px; }
 
 .admin-title {
-  width: 300px;
-  font-size: 2em; }
+  width: 500px;
+  font-size: 1.6em;
+  font-family: "Roboto Mono", sans-serif; }
 
 #add-product-form .form-group:nth-of-type(n+2) {
   display: none; }
@@ -9654,14 +9657,15 @@ a {
   margin: 15px auto;
   border: none; }
 
-.logo-block .slider-nav .slick-slide {
-  height: 100px; }
-  .logo-block .slider-nav .slick-slide img {
-    margin: 0 auto; }
-
-.logo-block .slider-nav .slick-current {
-  -webkit-filter: grayscale(100%);
-          filter: grayscale(100%); }
+.logo-block .slider-nav {
+  display: none; }
+  .logo-block .slider-nav .slick-slide {
+    height: 100px; }
+    .logo-block .slider-nav .slick-slide img {
+      margin: 0 auto; }
+  .logo-block .slider-nav .slick-current {
+    -webkit-filter: grayscale(100%);
+            filter: grayscale(100%); }
 
 .item-info li {
   list-style: none;

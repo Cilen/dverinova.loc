@@ -6,10 +6,6 @@
     <link href="/vendor/fine-uploader/fine-uploader-gallery.css" rel="stylesheet">
     <div class="container">
         <div class="row">
-            <h2>{{$data['title']}}</h2>
-            <hr>
-
-
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <ul>
@@ -30,9 +26,9 @@
                 </a>
             </div>
             <div class="col-sm-10">
-                <form id="addItemForm" method="post" action="{{url('admin/product/'.$data['id_product'])}}"
+                <form id="addItemForm" method="post" action="{{url('admin/product/'.(empty($data['id_product']) ? "" : $data['id_product']))}}"
                       class="form-horizontal" id="add-product-form">
-                    @if ($data['update'])
+                    @if (isset($data['update']))
                         <input type="hidden" name="_method" value="PUT">
                     @endif
                     {{ csrf_field() }}
@@ -236,7 +232,7 @@
                         <div class="col-sm-offset-4 col-sm-4">
                             <div class="form-inline" data-block="submit">
                                 <button type="submit" class="btn btn-success btn-lg">Зберегти</button>
-                                @if ($data['update'])
+                                @if (isset($data['update']))
                                     <button type="button" class="btn btn-danger btn-lg" data-toggle="modal"
                                             data-target=".bs-example-modal-sm">Видалити
                                     </button>
@@ -267,7 +263,7 @@
                     <p>Ви дійсно бажаєте видалити даний товар із бази даних?</p>
                 </div>
                 <div class="modal-footer">
-                    <form method="post" action="{{url('admin/product/'.$data['id_product'])}}" class="form-horizontal">
+                    <form method="post" action="{{url('admin/product/'.(isset($data['id_product']) ? $data['id_product'] : ""))}}" class="form-horizontal">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="delete">
                         <button type="button" class="btn btn-success" data-dismiss="modal">Ні</button>
@@ -392,13 +388,13 @@
                 endpoint: '{{url('admin/images/uploads')}}',
                 params: {
                     '_token': '{{ csrf_token() }}',
-                    'id_product': '{{ $data["id_product"] }}',
+                    'id_product': '{{ (isset($data['id_product']) ? $data['id_product'] : "") }}',
                 }
             },
             session: {
                 endpoint: '{{url('admin/images/get')}}',
                 params: {
-                    'id_product': '{{ $data["id_product"] }}',
+                    'id_product': '{{ (isset($data['id_product']) ? $data['id_product'] : "") }}',
                 }
 
             },
@@ -421,7 +417,7 @@
         $.ajaxSetup({
             data: {
                 '_token': '{{ csrf_token() }}',
-                'id_product': '{{ $data["id_product"] }}'
+                'id_product': '{{ (isset($data['id_product']) ? $data['id_product'] : "") }}'
             },
         });
 

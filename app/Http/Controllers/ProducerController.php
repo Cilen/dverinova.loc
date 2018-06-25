@@ -15,7 +15,8 @@ class ProducerController extends Controller
     public function index()
     {
         $data = Producer::all();
-        return view('admin.producers')->with('data', $data);
+        $page['title'] = "Виробники";
+        return view('admin.producers')->with(['data' => $data, 'page' => $page]);
     }
 
     /**

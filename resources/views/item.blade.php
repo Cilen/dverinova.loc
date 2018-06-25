@@ -163,15 +163,21 @@
                 fade: true,
                 asNavFor: '.slider-nav'
             });
-            $('.slider-nav').slick({
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                touchMove: false,
-                asNavFor: '.slider-for',
-                infinite: false,
-                dots: false,
-                focusOnSelect: true,
-            });
+            if($('.slider-nav div').length > 1) {
+                $('.slider-nav').show();
+                $('.slider-nav').slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    touchMove: false,
+                    asNavFor: '.slider-for',
+                    infinite: false,
+                    dots: false,
+                    focusOnSelect: true,
+                });
+            } else {
+                $('.slider-nav').hide();
+            }
+
         });
         var totalInfo = new Vue({
             el: '#total-info',

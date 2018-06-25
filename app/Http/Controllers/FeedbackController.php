@@ -13,14 +13,16 @@ class FeedbackController extends Controller
     public function index()
     {
         $data = Feedback::where('viewed', '0')->orderBy('id_feedback', 'asc')->get();
-        return view('admin.feedback')->with('data', $data);
+        $page['title'] = 'Зворотній зв\'язок: нові запити';
+        return view('admin.feedback')->with(['data' => $data, 'page' => $page]);
     }
 
     //Переглянути старі замовлення в Адмін-таблиці
     public function oldFeedback()
     {
         $data = Feedback::where('viewed', '1')->orderBy('id_feedback', 'desc')->get();
-        return view('admin.feedback')->with('data', $data);
+        $page['title'] = 'Зворотній зв\'язок: оброблені запити';
+        return view('admin.feedback')->with(['data' => $data, 'page' => $page]);
     }
     //Редагувати дані за допомогою Адмін-таблиці
     public function update (Request $request, $idFeedback)
@@ -40,7 +42,7 @@ class FeedbackController extends Controller
     public function story (FeedbackRequest $request, SendMail $mail)
     {
         $userName = $request->input('userName');
-        $phone = $request->input('phone') ;
+        $phone = str_replace_first("+380", "0", $request->input('phone')) ;
         $feedback = Feedback::create([
             'user_name' => $userName,
             'phone' => $phone,

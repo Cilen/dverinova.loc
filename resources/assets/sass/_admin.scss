@@ -21,13 +21,17 @@
 }
 
 .admin-title-panel{
+  text-align: center;
   background-color: $theme-background-color;
-  color: $accent-color;
+  color: #FFF;
   height: 39px;
+  margin-bottom: 15px;
+
 }
 .admin-title{
-  width: 300px;
-  font-size: 2em;
+  width: 500px;
+  font-size: 1.6em;
+  font-family: $font-family-admin-title;
 }
 
 #add-product-form {

@@ -7,42 +7,13 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\InternalDoor;
 use App\OtherData;
-use App\Producer;
 use App\Product;
 use App\ProdImage;
 use App\TypesAccessories;
 use Illuminate\Http\Request;
-use function MongoDB\BSON\toJSON;
 
 class ProductController extends Controller
 {
-    //Дефолтні значення параметру $data
-    public $data = array(
-        "title" => "",
-        "id_product" =>"",
-        "update" => false,
-        "category" => "",
-        "name" => "",
-        "availability" => "1",
-        "id_producer" => "",
-        "price" => "0",
-        "description" => "",
-        "type" => "",
-        "size_60" => 0,
-        "size_70" => 0,
-        "size_80" => 0,
-        "size_90" => 0,
-        "height" => "0",
-        "width" => "0",
-        "thickness" => "0",
-        "length" => "0",
-        "number_in_package" => "0",
-        "total_area" => "0",
-        "numberOtherData" => 1,
-        "otherData" => array(
-            0 => array("name" => "", "value" => ""),
-        )
-    );
     //Перегляд всіх товарів в Адмін-таблиці
     public function index()
     {
@@ -51,8 +22,8 @@ class ProductController extends Controller
             $row->category_loc = trans("localization.".$row->category);
             $row->producer_name = $row->producer->producer;
         };
-//        dd($data);
-        return view('admin.show-products')->with('data', $data);
+        $page['title'] = "Переглянути всі товари";
+        return view('admin.show-products')->with(['data' => $data, 'page' => $page]);
     }
     // Головна сторінка сайту
     public function main(){
@@ -75,9 +46,9 @@ class ProductController extends Controller
     //Форма створення нового продукту
     public function create()
     {
-
-        $this->data['title'] = 'Додати новий товар';
-        return view('admin.add-product')->with("data", $this->data);
+        $page['title'] = "Додати новий товар";
+        $data = array();
+        return view('admin.add-product')->with(["data" => $data, "page" => $page]);
     }
     //Отримання даних з форми і створення моделі
     public function store(ProductRequest $request)
@@ -189,12 +160,11 @@ class ProductController extends Controller
         $product = $product->toArray();
         $otherData = array('otherData' => $otherData);
         $data = array_merge($product, $model, $producer, $otherData);
-        $data['title'] = 'Редагувати товар';
+        $page['title'] = 'Редагувати товар';
         $data['update'] = true;
         $data['otherData'][] = array("name" => "", "value" => "");
         $data['numberOtherData'] = count($data['otherData']);
-//        dd($data);
-        return view('admin.add-product')->with("data", $data);
+        return view('admin.add-product')->with(['data' => $data, 'page' => $page]);
     }
     //Виконати редагування даних за допомогою форми редагування даних
     public function update(ProductRequest $request, $id)

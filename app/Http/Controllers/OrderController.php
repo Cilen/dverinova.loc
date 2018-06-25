@@ -15,8 +15,8 @@ class OrderController extends Controller
     public function index()
     {
         $data = Order::where('viewed', '0')->with('product')->orderBy('id_order', 'asc')->get();
-
-        return view('admin.orders')->with('data', $data);
+        $page['title'] = 'Нові замовлення';
+        return view('admin.orders')->with(['data' => $data, 'page' => $page]);
     }
     //Переглянути детально конкретне замовлення
     public function show($idOrder){
@@ -29,14 +29,16 @@ class OrderController extends Controller
             }
         }
         $data->category_loc = trans("localization.".$data->product->category);
-        return view('admin.order-details')->with("data", $data) ;
+        $page['title'] = "Замовлення №".$data->id_order;
+        return view('admin.order-details')->with(['data' => $data, 'page' => $page]) ;
     }
 
     //Переглянути старі замовлення в Адмін-таблиці
     public function oldOrders()
     {
+        $page['title']="Оброблені замовлення";
         $data = Order::where('viewed', '1')->with('product')->orderBy('id_order', 'desc')->get();
-        return view('admin.orders')->with('data', $data);
+        return view('admin.orders')->with(['data' => $data, 'page' => $page]);
     }
     //Редагувати дані за допомогою Адмін-таблиці
     public function update (OrderUpdateRequest $request, $idOrder)
